@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hiwar Umrah</title>
+<meta name="theme-color" content="#3BB54A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap">
+<style>
+/* Layout: satu kolom ala aplikasi HP (maks 520px), navigasi bawah, pelajaran layar penuh */
+:root{
+  --bg:#FFFFFF; --bg2:#F2F5F0; --ink:#2B2B2B; --muted:#7B807A; --line:#E3E6E1;
+  --green:#3BB54A; --green-d:#2C9139; --green-soft:#E2F5E4;
+  --brown:#5E3714; --brown-soft:#F4ECE3;
+  --gold:#FFB400; --gold-d:#E09A00; --orange:#FF9600; --blue:#1CB0F6; --blue-d:#1690CB; --blue-soft:#DDF4FF;
+  --red:#E5484D; --red-d:#C23A3E; --red-soft:#FFE5E5; --sand:#E7B46A;
+  --f-ui:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-ar:"Noto Naskh Arabic","Geeza Pro","Arabic Typesetting",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121A15; --bg2:#0C120E; --ink:#ECF0EA; --muted:#98A398; --line:#27342B;
+  --green-soft:#183A20; --brown:#E0B488; --brown-soft:#2A2018; --blue-soft:#0F2E3D; --red-soft:#3B1D1E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A15; --bg2:#0C120E; --ink:#ECF0EA; --muted:#98A398; --line:#27342B;
+  --green-soft:#183A20; --brown:#E0B488; --brown-soft:#2A2018; --blue-soft:#0F2E3D; --red-soft:#3B1D1E; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg2);color:var(--ink);font:700 16px/1.45 var(--f-ui);-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.ar{font-family:var(--f-ar);direction:rtl;font-weight:600;line-height:1.9}
+.muted{color:var(--muted)}
+#app{max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;background:var(--bg);position:relative}
+.scr{padding:0 16px calc(96px + env(safe-area-inset-bottom,0px))}
+
+/* Tombol bergaya 3D */
+.b{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:12px 18px;border-radius:16px;border:2px solid var(--line);border-bottom-width:4px;background:var(--bg);font:800 15px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.b:active:not(:disabled){transform:translateY(2px);border-bottom-width:2px;margin-bottom:2px}
+.b.pri{background:var(--green);border-color:var(--green-d);color:#fff}
+.b.blue{background:var(--blue);border-color:var(--blue-d);color:#fff}
+.b.red{background:var(--red);border-color:var(--red-d);color:#fff}
+.b.ghost{border:0;background:none;color:var(--blue);min-height:40px}
+.b:disabled{background:var(--line);border-color:var(--line);color:var(--muted);cursor:default}
+.b svg{width:20px;height:20px}
+.stack{display:flex;flex-direction:column;gap:10px}
+
+/* Bar atas */
+.tb{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;border-bottom:2px solid var(--line)}
+.tb-logo{width:34px;height:34px;border-radius:10px;background:#fff;object-fit:contain;flex:none}
+.tb-title{font-weight:900;font-size:17px;color:var(--green);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip{display:inline-flex;align-items:center;gap:4px;font-weight:900;font-size:16px;font-variant-numeric:tabular-nums}
+.chip svg{width:24px;height:24px}
+.chip.fire{color:var(--orange)} .chip.fire.off{color:var(--muted)} .chip.xp{color:var(--gold-d)}
+.ring{position:relative;width:34px;height:34px;flex:none}
+.ring svg{width:34px;height:34px;transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:8.5px;color:var(--green);letter-spacing:-.02em}
+
+/* Maskot + gelembung */
+.masc{width:96px;height:96px;flex:none}
+.masc.big{width:170px;height:170px}
+.masc.sm{width:78px;height:78px}
+.bounce{animation:bounce 2.4s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.bounce,.pulse{animation:none!important}}
+.say{display:flex;align-items:flex-end;gap:8px;margin:6px 0 16px}
+.bub{position:relative;border:2px solid var(--line);border-radius:16px;padding:10px 14px;background:var(--bg);text-align:left;min-width:0;flex:1}
+.bub::before{content:"";position:absolute;left:-9px;bottom:18px;width:14px;height:14px;background:var(--bg);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.bub .ar{font-size:26px;display:block;text-align:right}
+.bub small{display:block;color:var(--gold-d);font-size:14px}
+button.bub{cursor:pointer}
+
+/* Peta perjalanan */
+.hello{display:flex;align-items:center;gap:10px;margin:14px 0 6px}
+.hello .bub{font-size:15px}
+.unit{margin-top:18px}
+.ub{border-radius:16px;padding:14px 16px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:4px solid rgba(0,0,0,.18)}
+.ub small{display:block;font-size:12px;letter-spacing:.1em;opacity:.85}
+.ub b{font-size:18px;font-weight:900}
+.u0{background:#58A8D6} .u1{background:var(--green)} .u2{background:#8C5A2B} .u3{background:#CE82FF} .u4{background:#FF9600}
+.ub .ar{font-size:22px;color:#fff;opacity:.9;line-height:1.4}
+.nodes{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 0 6px}
+.nd{display:flex;flex-direction:column;align-items:center;transform:translateX(var(--x));position:relative}
+.hex{position:relative;width:84px;height:88px;border:0;background:none;padding:0}
+.hex svg.hx{position:absolute;inset:0;width:100%;height:100%}
+.hex .s{fill:#C7CBC5} .hex .f{fill:var(--line)}
+.hex.av .s{fill:var(--green-d)} .hex.av .f{fill:var(--green)}
+.hex.done .s{fill:var(--gold-d)} .hex.done .f{fill:var(--gold)}
+.hex .ic{position:absolute;left:0;right:0;top:22px;display:grid;place-items:center;color:#fff}
+.hex.lock .ic{color:var(--muted)}
+.hex .ic svg{width:34px;height:34px}
+.hex:active .hx{transform:translateY(3px)}
+.nd-l{font-size:13px;font-weight:800;margin-top:2px;text-align:center;max-width:150px;line-height:1.25}
+.pips{display:flex;gap:4px;margin-top:3px}
+.pips i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.pips i.on{background:var(--gold)}
+.tip{position:absolute;top:-34px;background:var(--bg);border:2px solid var(--line);color:var(--green);font-weight:900;font-size:13px;padding:4px 12px;border-radius:12px;letter-spacing:.06em;white-space:nowrap}
+.tip::after{content:"";position:absolute;left:50%;bottom:-7px;width:10px;height:10px;background:var(--bg);border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translateX(-50%) rotate(45deg)}
+.pulse .tip{animation:bounce 1.6s ease-in-out infinite}
+.credit{display:flex;align-items:center;justify-content:center;gap:10px;margin:28px 0 8px;color:var(--muted);font-size:13px}
+.credit img{width:36px;height:36px;border-radius:10px;background:#fff}
+
+/* Navigasi bawah */
+.bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;z-index:6;background:var(--bg);border-top:2px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.bn button{border:2px solid transparent;background:none;border-radius:12px;padding:6px 0 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:800;color:var(--muted)}
+.bn button svg{width:26px;height:26px}
+.bn button[aria-current="page"]{border-color:var(--blue);background:var(--blue-soft);color:var(--blue)}
+
+/* Lembar bawah (sheet) */
+.sh-wrap{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sh-bg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.sh{position:relative;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.sh h3{margin:2px 0 4px;font-size:22px;font-weight:900}
+.sh .grab{width:44px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 12px}
+.ns-ar{font-family:var(--f-ar);font-size:30px;color:var(--green);text-align:center;line-height:1.6}
+.ns{text-align:center}
+.ns p{margin:4px 0 14px}
+.warn{color:var(--orange)}
+.ph{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:12px 0;border-bottom:2px solid var(--line);text-align:left}
+.ph .ar{font-size:24px;text-align:right}
+.ph .lt{color:var(--gold-d);font-size:14px}
+.ph .id{font-size:14px;color:var(--muted);font-weight:700}
+.ph .acts{grid-row:1 / span 3;grid-column:2;display:flex;flex-direction:column;gap:6px}
+.spk{width:44px;height:44px;border-radius:14px;border:0;border-bottom:4px solid var(--blue-d);background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+.spk svg{width:24px;height:24px}
+.spk.slow{background:var(--bg);color:var(--blue);border:2px solid var(--line);border-bottom-width:4px;font-size:11px;font-weight:900}
+.spk.big{width:110px;height:110px;border-radius:28px;border-bottom-width:6px}
+.spk.big svg{width:54px;height:54px}
+.poster-img{width:100%;border-radius:16px;border:2px solid var(--line);display:block;margin:6px 0 12px}
+
+/* Pelajaran */
+.ls{position:fixed;inset:0;z-index:30;display:flex;justify-content:center;background:var(--bg2)}
+.ls-in{width:100%;max-width:520px;background:var(--bg);display:flex;flex-direction:column;height:100%}
+.ls-top{display:flex;align-items:center;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 8px}
+.x{border:0;background:none;color:var(--muted);padding:4px;display:grid;place-items:center}
+.x svg{width:28px;height:28px}
+.pbar{flex:1;height:16px;border-radius:16px;background:var(--line);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:16px;background:var(--green);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.25);transition:width .35s}
+.combo{font-weight:900;color:var(--orange);font-size:15px;white-space:nowrap}
+.ls-body{flex:1;overflow-y:auto;padding:8px 16px 16px}
+.ls-body h2{font-size:22px;font-weight:900;margin:8px 0 10px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opts.g2{display:grid;grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:12px;min-height:56px;padding:10px 14px;border-radius:16px;border:2px solid var(--line);border-bottom-width:4px;background:var(--bg);text-align:left;font-weight:700;font-size:16px}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:var(--muted)}
+.opt.aro{justify-content:center;flex-direction:column;gap:0;text-align:center}
+.opt.aro .ar{font-size:24px;line-height:1.7}
+.opt.aro small{color:var(--muted);font-size:13px}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft);color:var(--blue)}
+.opt.ok{border-color:var(--green-d);background:var(--green-soft);color:var(--green-d)}
+.opt.no{border-color:var(--red-d);background:var(--red-soft);color:var(--red)}
+.lock-opts .opt{pointer-events:none}
+.lis{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin:12px 0 22px}
+.ansz{min-height:120px;border-top:2px solid var(--line);border-bottom:2px solid var(--line);padding:10px 0;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;background-image:linear-gradient(transparent 58px,var(--line) 58px,var(--line) 60px,transparent 60px);background-size:100% 60px}
+.bank{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+.tile{border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;background:var(--bg);padding:2px 12px;font-family:var(--f-ar);font-size:22px;font-weight:600;line-height:1.8}
+.tile.used{visibility:hidden}
+.fillq{font-size:28px;text-align:center;margin:10px 0 4px}
+.blank{display:inline-block;min-width:80px;border-bottom:3px solid var(--blue);color:var(--blue);margin:0 4px}
+.ls-foot{padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));border-top:2px solid var(--line)}
+.res{margin:-14px -16px calc(-14px - env(safe-area-inset-bottom,0px));padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.res.ok{background:var(--green-soft);color:var(--green-d)}
+.res.bad{background:var(--red-soft);color:var(--red)}
+.res-h{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;margin-bottom:8px}
+.res-h svg{width:30px;height:30px;flex:none;background:#fff;border-radius:50%;padding:4px}
+.res-h .ar{font-size:24px;line-height:1.5}
+.res-a{display:flex;gap:10px;align-items:center;margin-bottom:12px;color:var(--ink)}
+.res-a .ar{font-size:22px;line-height:1.6}
+.res-a small{display:block;color:var(--gold-d)}
+.res-a div{min-width:0}
+
+/* Layar perayaan */
+.cel{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 16px;gap:8px}
+.cel h1{font-size:30px;font-weight:900;margin:6px 0 0;color:var(--gold-d)}
+.cel p{margin:0;color:var(--muted);font-size:16px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-top:18px}
+.st{border:2px solid;border-radius:16px;overflow:hidden;font-variant-numeric:tabular-nums}
+.st small{display:block;color:#fff;font-size:11px;font-weight:900;letter-spacing:.08em;padding:4px 0}
+.st b{display:block;padding:10px 0;font-size:20px;font-weight:900}
+.st.g{border-color:var(--gold)} .st.g small{background:var(--gold)} .st.g b{color:var(--gold-d)}
+.st.n{border-color:var(--green)} .st.n small{background:var(--green)} .st.n b{color:var(--green)}
+.st.u{border-color:var(--blue)} .st.u small{background:var(--blue)} .st.u b{color:var(--blue)}
+.flame{width:150px;height:150px}
+.bignum{font-size:84px;font-weight:900;color:var(--orange);line-height:1}
+.week{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.week div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.week i{width:30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;color:#fff}
+.week i.on{background:var(--orange)}
+.week i svg{width:18px;height:18px}
+.week .today{color:var(--orange)}
+
+/* Bacaan, peringkat, profil */
+.h1{font-size:24px;font-weight:900;margin:18px 0 6px}
+.seg{display:flex;background:var(--bg2);border:2px solid var(--line);border-radius:14px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;border-radius:10px;padding:9px 6px;font-weight:800;color:var(--muted);font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--blue);box-shadow:0 2px 0 var(--line)}
+.card{border:2px solid var(--line);border-radius:18px;padding:14px 16px;margin-top:12px}
+.card h4{margin:0 0 2px;font-size:17px;font-weight:900}
+.card .w{margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:700}
+.card .ar{font-size:26px;line-height:2.05;text-align:right}
+.card .lt{color:var(--gold-d);font-size:15px;margin-top:4px}
+.card .tr{font-size:15px;font-weight:700;margin-top:4px}
+.card .src{font-size:12.5px;color:var(--muted);margin-top:6px;font-weight:700}
+.card .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.cnt{font-size:12px;font-weight:900;color:var(--orange);background:var(--brown-soft);border-radius:20px;padding:2px 8px;margin-left:6px}
+.ctr{min-height:44px;border-radius:14px;border:2px solid var(--line);border-bottom-width:4px;background:var(--bg);padding:0 14px;font-weight:900;font-variant-numeric:tabular-nums}
+.ctr.done{background:var(--green-soft);border-color:var(--green);color:var(--green-d)}
+.card.done{border-color:var(--green)}
+.note{background:var(--brown-soft);border-radius:14px;padding:10px 14px;font-size:14px;margin-top:12px;font-weight:700}
+.note b{color:var(--brown)}
+.prof{display:flex;align-items:center;gap:14px;margin-top:18px}
+.av{width:76px;height:80px;position:relative;flex:none}
+.av span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:30px;font-weight:900;padding-bottom:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.stat{border:2px solid var(--line);border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.stat svg{width:28px;height:28px;flex:none}
+.stat b{display:block;font-size:20px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat small{color:var(--muted);font-size:13px}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.bdg{text-align:center;font-size:12.5px;font-weight:800;border:0;background:none;padding:0}
+.bdg svg{width:74px;height:82px;display:block;margin:0 auto 2px}
+.bdg.lk{color:var(--muted)}
+.set{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:15px}
+.row .seg{flex:0 1 230px}
+.inp{width:100%;border:2px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--bg2);font-weight:800;font-size:17px}
+.inp:focus{outline:none;border-color:var(--blue)}
+.tog{appearance:none;width:52px;height:30px;border-radius:30px;background:var(--line);position:relative;flex:none;cursor:pointer;transition:background .15s}
+.tog::after{content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .15s}
+.tog:checked{background:var(--green)}
+.tog:checked::after{transform:translateX(22px)}
+.lb{width:100%;border-collapse:collapse;margin-top:10px;font-variant-numeric:tabular-nums}
+.lb td{padding:10px 6px;border-bottom:2px solid var(--line)}
+.lb tr.me td{background:var(--green-soft)}
+.lb .rk{width:36px;font-weight:900;color:var(--muted)}
+.lb .xp{text-align:right;font-weight:900;color:var(--gold-d)}
+
+/* Onboarding */
+.ob{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.ob-body{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.ob-body.top{justify-content:flex-start;padding-top:10px}
+.ob h2{font-size:24px;font-weight:900;margin:0}
+.goal{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:16px;border:2px solid var(--line);border-bottom-width:4px;background:var(--bg);font-weight:900;font-size:16px}
+.goal span{color:var(--muted);font-weight:700;font-size:14px}
+.goal[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-soft);color:var(--blue)}
+.brandline{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;margin-top:14px}
+.brandline img{width:40px;height:40px;border-radius:10px;background:#fff}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="lesson" class="ls" hidden></div>
+<div id="sheet" class="sh-wrap" hidden></div>
+<script>
+const SCN = [
+  {id:"pesawat", w:"الطَّائِرَة", t:"Di pesawat", role:"Pramugari penerbangan Jakarta–Jeddah",
+   roleEn:"a friendly FEMALE flight attendant on a flight from Jakarta to Jeddah full of umrah pilgrims. Topics: seat, drinks and meals, blanket, arrival time, the announcement that the plane will pass the miqat soon so pilgrims should be in ihram and make niyyah, landing cards. The learner is talking to a woman, so they should address you with FEMININE forms (min fadhliki, anti, hal yumkinuki); if they use masculine forms toward you, mark it as 'perbaikan' and explain simply",
+   op:{m:{ar:"أَهْلًا بِكَ عَلَى مَتْنِ الطَّائِرَةِ. هَلْ تُرِيدُ مَاءً أَوْ عَصِيرًا؟",lat:"Ahlan bika 'alâ matnith-thâ'irah. Hal turîdu mâ'an au 'ashîrâ?",id:"Selamat datang di pesawat. Mau air atau jus?"},
+       f:{ar:"أَهْلًا بِكِ عَلَى مَتْنِ الطَّائِرَةِ. هَلْ تُرِيدِينَ مَاءً أَوْ عَصِيرًا؟",lat:"Ahlan biki 'alâ matnith-thâ'irah. Hal turîdîna mâ'an au 'ashîrâ?",id:"Selamat datang di pesawat. Mau air atau jus?"}},
+   ph:[["مَاءً، مِنْ فَضْلِكِ.","Mâ'an, min fadhliki.","Air, tolong. (kepada perempuan: fadhliki)"],
+       ["أَيْنَ مَقْعَدِي؟","Aina maq'adî?","Di mana kursi saya?"],
+       ["أُرِيدُ بَطَّانِيَّةً، مِنْ فَضْلِكِ.","Urîdu baththâniyyatan, min fadhliki.","Saya minta selimut."],
+       ["مَتَى نَمُرُّ بِالْمِيقَاتِ؟","Matâ namurru bil-mîqât?","Kapan kita melewati miqat?"],
+       ["مَتَى نَصِلُ إِلَى جُدَّةَ؟","Matâ nashilu ilâ Juddah?","Kapan kita sampai di Jeddah?"]]},
+  {id:"bandara", w:"المَطَار", t:"Di bandara", role:"Petugas imigrasi di Bandara Jeddah",
+   roleEn:"an immigration / airport officer at King Abdulaziz Airport, Jeddah",
+   op:{m:{ar:"أَهْلًا وَسَهْلًا! جَوَازُ السَّفَرِ مِنْ فَضْلِكَ.",lat:"Ahlan wa sahlan! Jawâzus-safar min fadhlik.",id:"Selamat datang! Paspornya, silakan."},
+       f:{ar:"أَهْلًا وَسَهْلًا! جَوَازُ السَّفَرِ مِنْ فَضْلِكِ.",lat:"Ahlan wa sahlan! Jawâzus-safar min fadhliki.",id:"Selamat datang! Paspornya, silakan."}},
+   ph:[["تَفَضَّلْ، هٰذَا جَوَازُ سَفَرِي.","Tafadhdhal, hâdzâ jawâzu safarî.","Silakan, ini paspor saya."],
+       ["جِئْتُ لِلْعُمْرَةِ.","Ji'tu lil-'umrah.","Saya datang untuk umrah."],
+       ["أَنَا مِنْ إِنْدُونِيسِيَا.","Anâ min Indûnîsiyâ.","Saya dari Indonesia."],
+       ["أَيْنَ أَسْتَلِمُ الْحَقَائِبَ؟","Aina astalimul-haqâ'ib?","Di mana saya mengambil koper?"]]},
+  {id:"hotel", w:"الفُنْدُق", t:"Check-in hotel", role:"Resepsionis hotel di Makkah",
+   roleEn:"a hotel receptionist in Makkah",
+   op:{m:{ar:"مَسَاءَ الْخَيْرِ! كَيْفَ أَسْتَطِيعُ أَنْ أُسَاعِدَكَ؟",lat:"Masâ'al-khair! Kaifa astathî'u an usâ'idak?",id:"Selamat sore! Ada yang bisa saya bantu?"},
+       f:{ar:"مَسَاءَ الْخَيْرِ! كَيْفَ أَسْتَطِيعُ أَنْ أُسَاعِدَكِ؟",lat:"Masâ'al-khair! Kaifa astathî'u an usâ'idaki?",id:"Selamat sore! Ada yang bisa saya bantu?"}},
+   ph:[["عِنْدِي حَجْزٌ بِاسْمِ ...","'Indî hajzun bismi ...","Saya punya reservasi atas nama ..."],
+       ["مَا رَقْمُ الْغُرْفَةِ؟","Mâ raqmul-ghurfah?","Nomor kamarnya berapa?"],
+       ["الْمُكَيِّفُ لَا يَعْمَلُ.","Al-mukayyifu lâ ya'mal.","AC-nya tidak menyala."],
+       ["مَتَى وَقْتُ الْفُطُورِ؟","Matâ waqtul-futhûr?","Jam berapa sarapan?"]]},
+  {id:"taksi", w:"سَيَّارَة الأُجْرَة", t:"Naik taksi", role:"Sopir taksi di Makkah",
+   roleEn:"a taxi driver in Makkah",
+   op:{m:{ar:"السَّلَامُ عَلَيْكُمْ! إِلَى أَيْنَ؟",lat:"As-salâmu 'alaikum! Ilâ aina?",id:"Assalamualaikum! Mau ke mana?"},
+       f:{ar:"السَّلَامُ عَلَيْكُمْ! إِلَى أَيْنَ؟",lat:"As-salâmu 'alaikum! Ilâ aina?",id:"Assalamualaikum! Mau ke mana?"}},
+   ph:[["إِلَى الْمَسْجِدِ الْحَرَامِ، مِنْ فَضْلِكَ.","Ilal-masjidil-harâm, min fadhlik.","Ke Masjidil Haram, tolong."],
+       ["كَمِ الْأُجْرَةُ؟","Kamil-ujrah?","Ongkosnya berapa?"],
+       ["هٰذَا غَالٍ جِدًّا.","Hâdzâ ghâlin jiddan.","Ini mahal sekali."],
+       ["قِفْ هُنَا، مِنْ فَضْلِكَ.","Qif hunâ, min fadhlik.","Tolong berhenti di sini."]]},
+  {id:"pasar", w:"السُّوق", t:"Belanja di pasar", role:"Pedagang kurma & oleh-oleh",
+   roleEn:"a friendly shopkeeper selling dates and souvenirs near the Haram",
+   op:{m:{ar:"أَهْلًا يَا حَاجّ! تَفَضَّلْ، مَاذَا تُرِيدُ؟",lat:"Ahlan yâ hâjj! Tafadhdhal, mâdzâ turîd?",id:"Halo, Pak Haji! Silakan, mau cari apa?"},
+       f:{ar:"أَهْلًا يَا حَاجَّة! تَفَضَّلِي، مَاذَا تُرِيدِينَ؟",lat:"Ahlan yâ hâjjah! Tafadhdhalî, mâdzâ turîdîn?",id:"Halo, Bu Hajah! Silakan, mau cari apa?"}},
+   ph:[["بِكَمْ هٰذَا؟","Bikam hâdzâ?","Ini berapa harganya?"],
+       ["أُرِيدُ تَمْرَ عَجْوَةٍ.","Urîdu tamra 'ajwah.","Saya mau kurma ajwa."],
+       ["هَلْ عِنْدَكَ أَرْخَصُ؟","Hal 'indaka arkhash?","Ada yang lebih murah?"],
+       ["سَآخُذُ كِيلُو وَاحِدًا.","Sa-âkhudzu kîlû wâhidan.","Saya ambil satu kilo."]]},
+  {id:"restoran", w:"المَطْعَم", t:"Di restoran", role:"Pelayan restoran",
+   roleEn:"a waiter in a simple restaurant in Madinah",
+   op:{m:{ar:"أَهْلًا بِكَ! مَاذَا تُحِبُّ أَنْ تَطْلُبَ؟",lat:"Ahlan bik! Mâdzâ tuhibbu an tathlub?",id:"Selamat datang! Mau pesan apa?"},
+       f:{ar:"أَهْلًا بِكِ! مَاذَا تُحِبِّينَ أَنْ تَطْلُبِي؟",lat:"Ahlan biki! Mâdzâ tuhibbîna an tathlubî?",id:"Selamat datang! Mau pesan apa?"}},
+   ph:[["أُرِيدُ رُزًّا بِالدَّجَاجِ.","Urîdu ruzzan bid-dajâj.","Saya mau nasi ayam."],
+       ["مَاءً، مِنْ فَضْلِكَ.","Mâ'an, min fadhlik.","Air, tolong."],
+       ["الطَّعَامُ لَذِيذٌ، شُكْرًا.","Ath-tha'âmu ladzîdz, syukran.","Makanannya enak, terima kasih."],
+       ["الْحِسَابُ، مِنْ فَضْلِكَ.","Al-hisâb, min fadhlik.","Minta tagihannya."]]},
+  {id:"arah", w:"المَسْجِد", t:"Tanya arah di masjid", role:"Petugas Masjid Nabawi",
+   roleEn:"a helpful staff member at Masjid an-Nabawi in Madinah",
+   op:{m:{ar:"السَّلَامُ عَلَيْكُمْ يَا أَخِي، هَلْ تَبْحَثُ عَنْ شَيْءٍ؟",lat:"As-salâmu 'alaikum yâ akhî, hal tabhatsu 'an syai'?",id:"Assalamualaikum, Saudaraku. Sedang mencari sesuatu?"},
+       f:{ar:"السَّلَامُ عَلَيْكُمْ يَا أُخْتِي، هَلْ تَبْحَثِينَ عَنْ شَيْءٍ؟",lat:"As-salâmu 'alaikum yâ ukhtî, hal tabhatsîna 'an syai'?",id:"Assalamualaikum, Saudariku. Sedang mencari sesuatu?"}},
+   ph:[["أَيْنَ الرَّوْضَةُ الشَّرِيفَةُ؟","Ainar-raudhatusy-syarîfah?","Di mana Raudhah?"],
+       ["أَيْنَ بَابُ السَّلَامِ؟","Aina bâbus-salâm?","Di mana Pintu Babussalam?"],
+       ["أَيْنَ دَوْرَاتُ الْمِيَاهِ؟","Aina dawrâtul-miyâh?","Di mana toilet?"],
+       ["أَنَا تَائِهٌ.","Anâ tâ'ih.","Saya tersesat."]]},
+  {id:"miqat", w:"المِيقَات", t:"Miqat & niat ihram", role:"Muthawwif di miqat",
+   roleEn:"an experienced muthawwif (umrah guide) with the group at the miqat (e.g. Bir Ali / Dhul-Hulayfah for pilgrims coming from Madinah; pilgrims flying straight to Jeddah usually enter ihram on the plane before passing the miqat). Explain ihram clothing, the niyyah 'labbaika Allahumma 'umratan', the talbiyah and the ihram prohibitions in very simple words, using correct mainstream fiqh; if scholars or madhhabs differ (e.g. on Jeddah as miqat), say so briefly in the Indonesian explanation and advise asking the group's ustadz",
+   op:{m:{ar:"نَحْنُ الْآنَ فِي الْمِيقَاتِ. هَلْ أَنْتَ مُسْتَعِدٌّ لِلْإِحْرَامِ؟",lat:"Nahnul-âna fil-mîqât. Hal anta musta'iddun lil-ihrâm?",id:"Kita sekarang di miqat. Apakah Anda sudah siap berihram?"},
+       f:{ar:"نَحْنُ الْآنَ فِي الْمِيقَاتِ. هَلْ أَنْتِ مُسْتَعِدَّةٌ لِلْإِحْرَامِ؟",lat:"Nahnul-âna fil-mîqât. Hal anti musta'iddatun lil-ihrâm?",id:"Kita sekarang di miqat. Apakah Anda sudah siap berihram?"}},
+   ph:[["أَيْنَ الْمِيقَاتُ؟","Ainal-mîqât?","Di mana miqatnya?"],
+       ["مَتَى أَلْبَسُ مَلَابِسَ الْإِحْرَامِ؟","Matâ albasu malâbisal-ihrâm?","Kapan saya memakai pakaian ihram?"],
+       ["لَبَّيْكَ اللّٰهُمَّ عُمْرَةً.","Labbaikallâhumma 'umratan.","Aku penuhi panggilan-Mu, ya Allah, untuk umrah. (lafaz niat)"],
+       ["هَلْ يَجُوزُ الْعِطْرُ بَعْدَ النِّيَّةِ؟","Hal yajûzul-'ithru ba'dan-niyyah?","Bolehkah memakai parfum setelah niat?"],
+       ["مَا مَحْظُورَاتُ الْإِحْرَامِ؟","Mâ mahzhûrâtul-ihrâm?","Apa saja larangan ihram?"]]},
+  {id:"thawaf", w:"الطَّوَاف", t:"Thawaf & sa'i", role:"Muthawwif (pembimbing umrah)",
+   roleEn:"an experienced muthawwif (umrah guide) at the Haram who explains tawaf and sa'i step by step. Give correct, mainstream fiqh in very simple words; if scholars or madhhabs differ on a point, say so briefly in the Indonesian explanation and advise asking the group's ustadz",
+   op:{m:{ar:"أَهْلًا يَا أَخِي! هَلْ عِنْدَكَ سُؤَالٌ عَنِ الطَّوَافِ أَوِ السَّعْيِ؟",lat:"Ahlan yâ akhî! Hal 'indaka su'âlun 'anith-thawâfi awis-sa'yi?",id:"Halo, Saudaraku! Ada pertanyaan tentang thawaf atau sa'i?"},
+       f:{ar:"أَهْلًا يَا أُخْتِي! هَلْ عِنْدَكِ سُؤَالٌ عَنِ الطَّوَافِ أَوِ السَّعْيِ؟",lat:"Ahlan yâ ukhtî! Hal 'indaki su'âlun 'anith-thawâfi awis-sa'yi?",id:"Halo, Saudariku! Ada pertanyaan tentang thawaf atau sa'i?"}},
+   ph:[["مِنْ أَيْنَ أَبْدَأُ الطَّوَافَ؟","Min aina abda'uth-thawâf?","Dari mana saya mulai thawaf?"],
+       ["كَمْ شَوْطًا فِي الطَّوَافِ؟","Kam syauthan fith-thawâf?","Thawaf berapa putaran?"],
+       ["نَسِيتُ عَدَدَ الْأَشْوَاطِ، مَاذَا أَفْعَلُ؟","Nasîtu 'adadal-asywâth, mâdzâ af'al?","Saya lupa jumlah putarannya, apa yang harus saya lakukan?"],
+       ["أَيْنَ الصَّفَا؟","Ainash-shafâ?","Di mana bukit Shafa?"],
+       ["هَلْ أَبْدَأُ السَّعْيَ مِنَ الصَّفَا؟","Hal abda'us-sa'ya minash-shafâ?","Apakah sa'i dimulai dari Shafa?"]]},
+  {id:"tahallul", w:"التَّحَلُّل", t:"Tahallul & potong rambut", role:"Tukang cukur dekat Marwah (perempuan: pembimbing wanita)",
+   roleEn:"if the learner is male: a friendly barber in a shop near Marwah right after sa'i, offering halq (shaving the head) or taqsir (shortening). If the learner is female: a female muthawwifah (guide) in the women's area helping her do taqsir herself (cutting about a fingertip length from the ends of her hair; women do not shave). Explain tahallul simply: after cutting, the umrah is complete and ihram restrictions end. Use correct mainstream fiqh; if scholars differ, say so briefly in the Indonesian explanation and advise asking the group's ustadz",
+   op:{m:{ar:"تَقَبَّلَ اللّٰهُ مِنْكَ! هَلْ تُرِيدُ الْحَلْقَ أَمِ التَّقْصِيرَ؟",lat:"Taqabbalallâhu mink! Hal turîdul-halqa amit-taqshîr?",id:"Semoga Allah menerima ibadah Anda! Mau dicukur habis atau dipendekkan?"},
+       f:{ar:"تَقَبَّلَ اللّٰهُ مِنْكِ! هَلْ تُرِيدِينَ أَنْ أُسَاعِدَكِ فِي التَّقْصِيرِ؟",lat:"Taqabbalallâhu minki! Hal turîdîna an usâ'idaki fit-taqshîr?",id:"Semoga Allah menerima ibadah Anda! Mau saya bantu memotong rambut Anda?"}},
+   ph:[["أُرِيدُ الْحَلْقَ، مِنْ فَضْلِكَ.","Urîdul-halqa, min fadhlik.","Saya mau dicukur habis."],
+       ["قَصِّرْ قَلِيلًا فَقَطْ.","Qashshir qalîlan faqath.","Dipendekkan sedikit saja."],
+       ["كَمْ سِعْرُ الْحَلْقِ؟","Kam si'rul-halq?","Berapa harga cukur habis?"],
+       ["هَلِ انْتَهَتِ الْعُمْرَةُ الْآنَ؟","Halintahatil-'umratul-ân?","Apakah umrah sudah selesai sekarang?"],
+       ["هَلْ يَجُوزُ لُبْسُ الْمَلَابِسِ الْعَادِيَّةِ الْآنَ؟","Hal yajûzu lubsul-malâbisil-'âdiyyatil-ân?","Apakah sekarang boleh memakai pakaian biasa?"]]},
+  {id:"quba", w:"قُبَاء", t:"Ziarah ke Masjid Quba", role:"Pemandu ziarah di Madinah",
+   roleEn:"a friendly local guide on a ziyarah bus tour in Madinah, taking pilgrims to Masjid Quba (the first mosque built by the Prophet ﷺ; he used to visit it every Saturday, riding or walking - Bukhari & Muslim; whoever purifies himself at home then prays in it gets a reward like an umrah - Ibn Majah, Nasa'i). Talk about the bus schedule, time at each stop, prayer areas, and nearby stops like Jabal Uhud or a date farm. Keep religious facts to authentic, mainstream sources; if scholars differ, say so briefly in the Indonesian explanation",
+   op:{m:{ar:"صَبَاحَ الْخَيْرِ! الْيَوْمَ نَزُورُ مَسْجِدَ قُبَاءَ. هَلْ تَعْرِفُ فَضْلَهُ؟",lat:"Shabâhal-khair! Al-yauma nazûru masjida Qubâ'. Hal ta'rifu fadhlah?",id:"Selamat pagi! Hari ini kita ziarah ke Masjid Quba. Tahukah Anda keutamaannya?"},
+       f:{ar:"صَبَاحَ الْخَيْرِ! الْيَوْمَ نَزُورُ مَسْجِدَ قُبَاءَ. هَلْ تَعْرِفِينَ فَضْلَهُ؟",lat:"Shabâhal-khair! Al-yauma nazûru masjida Qubâ'. Hal ta'rifîna fadhlah?",id:"Selamat pagi! Hari ini kita ziarah ke Masjid Quba. Tahukah Anda keutamaannya?"}},
+   ph:[["مَتَى يَتَحَرَّكُ الْبَاصُ؟","Matâ yataharrakul-bâsh?","Kapan busnya berangkat?"],
+       ["كَمْ دَقِيقَةً سَنَبْقَى هُنَا؟","Kam daqîqatan sanabqâ hunâ?","Berapa menit kita di sini?"],
+       ["أُرِيدُ أَنْ أُصَلِّيَ رَكْعَتَيْنِ فِي الْمَسْجِدِ.","Urîdu an ushalliya rak'ataini fil-masjid.","Saya ingin shalat dua rakaat di masjid."],
+       ["أَيْنَ مُصَلَّى النِّسَاءِ؟","Aina mushallan-nisâ'?","Di mana tempat shalat wanita?"],
+       ["مَا هٰذَا الْمَكَانُ؟","Mâ hâdzal-makân?","Tempat apa ini?"]]},
+  {id:"uhud", w:"أُحُد", t:"Ziarah Jabal Uhud", role:"Pemandu ziarah di Jabal Uhud",
+   roleEn:"a friendly local guide at Jabal Uhud in Madinah. Topics: the Battle of Uhud (3 AH), the archers on the small hill (Jabal ar-Rumah / Jabal 'Ainain) who left their posts, Hamzah ibn 'Abdil-Muththalib (Sayyid asy-Syuhada) and about 70 martyrs buried there, the hadith 'Uhud is a mountain that loves us and we love it' (Bukhari & Muslim), the sunnah greeting when visiting graves, the date stalls nearby, bus time. Keep history and religious facts to authentic, mainstream sources; if scholars differ (e.g. on practices at graves), say so briefly in the Indonesian explanation",
+   op:{m:{ar:"وَصَلْنَا إِلَى جَبَلِ أُحُدٍ. هَلْ تَعْرِفُ قِصَّةَ غَزْوَةِ أُحُدٍ؟",lat:"Washalnâ ilâ jabali Uhud. Hal ta'rifu qishshata ghazwati Uhud?",id:"Kita sudah sampai di Jabal Uhud. Tahukah Anda kisah Perang Uhud?"},
+       f:{ar:"وَصَلْنَا إِلَى جَبَلِ أُحُدٍ. هَلْ تَعْرِفِينَ قِصَّةَ غَزْوَةِ أُحُدٍ؟",lat:"Washalnâ ilâ jabali Uhud. Hal ta'rifîna qishshata ghazwati Uhud?",id:"Kita sudah sampai di Jabal Uhud. Tahukah Anda kisah Perang Uhud?"}},
+   ph:[["أَيْنَ قُبُورُ شُهَدَاءِ أُحُدٍ؟","Aina qubûru syuhadâ'i Uhud?","Di mana makam para syuhada Uhud?"],
+       ["مَنْ هُوَ حَمْزَةُ؟","Man huwa Hamzah?","Siapakah Hamzah?"],
+       ["مَا اسْمُ هٰذَا الْجَبَلِ الصَّغِيرِ؟","Masmu hâdzal-jabalish-shaghîr?","Apa nama bukit kecil ini?"],
+       ["هَلْ يُمْكِنُ أَنْ نَصْعَدَ؟","Hal yumkinu an nash'ad?","Apakah kita boleh naik?"],
+       ["أُرِيدُ أَنْ أَشْتَرِيَ تَمْرًا هُنَا.","Urîdu an asytariya tamran hunâ.","Saya ingin membeli kurma di sini."]]},
+  {id:"oleh", w:"الهَدَايَا", t:"Oleh-oleh di Madinah", role:"Penjual toko oleh-oleh dekat Masjid Nabawi",
+   roleEn:"a friendly shopkeeper in a souvenir shop near Masjid an-Nabawi in Madinah selling prayer rugs, alcohol-free perfume ('ithr / oud), tasbih (prayer beads), dates, gamis and abaya. Quote prices in Saudi riyal, bargain in a friendly way, offer a bulk discount for many gifts, and let the learner practise numbers and prices (e.g. khamsûna riyâlan). Keep numbers simple and correct",
+   op:{m:{ar:"أَهْلًا وَسَهْلًا يَا حَاجّ! عِنْدَنَا سَجَّادٌ وَعِطْرٌ وَمَسَابِحُ. عَنْ أَيِّ شَيْءٍ تَبْحَثُ؟",lat:"Ahlan wa sahlan yâ hâjj! 'Indanâ sajjâdun wa 'ithrun wa masâbih. 'An ayyi syai'in tabhats?",id:"Selamat datang, Pak Haji! Kami punya sajadah, parfum, dan tasbih. Sedang cari apa?"},
+       f:{ar:"أَهْلًا وَسَهْلًا يَا حَاجَّة! عِنْدَنَا سَجَّادٌ وَعِطْرٌ وَمَسَابِحُ. عَنْ أَيِّ شَيْءٍ تَبْحَثِينَ؟",lat:"Ahlan wa sahlan yâ hâjjah! 'Indanâ sajjâdun wa 'ithrun wa masâbih. 'An ayyi syai'in tabhatsîn?",id:"Selamat datang, Bu Hajah! Kami punya sajadah, parfum, dan tasbih. Sedang cari apa?"}},
+   ph:[["أُرِيدُ سَجَّادَةَ صَلَاةٍ.","Urîdu sajjâdata shalâh.","Saya mau sajadah."],
+       ["هَلْ عِنْدَكَ عِطْرٌ بِدُونِ كُحُولٍ؟","Hal 'indaka 'ithrun bidûni kuhûl?","Ada parfum tanpa alkohol?"],
+       ["أُرِيدُ عَشْرَ مَسَابِحَ.","Urîdu 'asyra masâbih.","Saya mau sepuluh tasbih."],
+       ["هَلْ فِيهِ خَصْمٌ إِذَا اشْتَرَيْتُ كَثِيرًا؟","Hal fîhi khashmun idzasytaraitu katsîrâ?","Ada diskon kalau saya beli banyak?"],
+       ["هَلْ تَقْبَلُ الْبِطَاقَةَ؟","Hal taqbalul-bithâqah?","Bisa bayar pakai kartu?"]]},
+  {id:"terpisah", w:"تَائِه", t:"Terpisah dari rombongan", role:"Petugas keamanan Masjidil Haram",
+   roleEn:"a kind Saudi security officer (askar) at Masjidil Haram helping a pilgrim who got separated from their group. Calmly ask: name, country, hotel name, travel agency or muthawwif, the group's meeting point (e.g. a numbered gate such as Bab Malik Fahd / Gate 79), whether they have an ID card or bracelet with a phone number; offer your phone or take them to the help point for lost pilgrims. When relevant, add one practical tip in the Indonesian explanation (carry the hotel card and agency number, agree a meeting gate in advance)",
+   op:{m:{ar:"يَا حَاجّ، يَبْدُو أَنَّكَ تَائِهٌ. هَلْ أَنْتَ بِخَيْرٍ؟",lat:"Yâ hâjj, yabdû annaka tâ'ih. Hal anta bikhair?",id:"Pak Haji, sepertinya Anda tersesat. Anda baik-baik saja?"},
+       f:{ar:"يَا حَاجَّة، يَبْدُو أَنَّكِ تَائِهَةٌ. هَلْ أَنْتِ بِخَيْرٍ؟",lat:"Yâ hâjjah, yabdû annaki tâ'ihah. Hal anti bikhair?",id:"Bu Hajah, sepertinya Anda tersesat. Anda baik-baik saja?"}},
+   ph:[["ضَيَّعْتُ مَجْمُوعَتِي.","Dhayya'tu majmû'atî.","Saya terpisah dari rombongan saya."],
+       ["اِسْمُ فُنْدُقِي ...","Ismu funduqî ...","Nama hotel saya ..."],
+       ["هٰذِهِ بِطَاقَتِي، فِيهَا رَقْمُ الْمُطَوِّفِ.","Hâdzihi bithâqatî, fîhâ raqmul-muthawwif.","Ini kartu saya, ada nomor muthawwifnya."],
+       ["هَلْ يُمْكِنُ أَنْ أَتَّصِلَ بِهَاتِفِكَ؟","Hal yumkinu an attashila bihâtifik?","Bolehkah saya menelepon pakai HP Anda?"],
+       ["أَيْنَ مَرْكَزُ التَّائِهِينَ؟","Aina markazut-tâ'ihîn?","Di mana pusat bantuan orang tersesat?"]]},
+  {id:"kenalan", w:"التَّعَارُف", t:"Berkenalan", role:"Jamaah dari negara lain",
+   roleEn:"a friendly fellow pilgrim from another country (e.g. Egypt or Morocco) met in the mosque courtyard",
+   op:{m:{ar:"السَّلَامُ عَلَيْكُمْ! مِنْ أَيْنَ أَنْتَ؟",lat:"As-salâmu 'alaikum! Min aina anta?",id:"Assalamualaikum! Anda dari mana?"},
+       f:{ar:"السَّلَامُ عَلَيْكُمْ! مِنْ أَيْنَ أَنْتِ؟",lat:"As-salâmu 'alaikum! Min aina anti?",id:"Assalamualaikum! Anda dari mana?"}},
+   ph:[["وَعَلَيْكُمُ السَّلَامُ. أَنَا مِنْ إِنْدُونِيسِيَا.","Wa 'alaikumus-salâm. Anâ min Indûnîsiyâ.","Waalaikumsalam. Saya dari Indonesia."],
+       ["اِسْمِي ...","Ismî ...","Nama saya ..."],
+       ["هٰذِهِ أَوَّلُ عُمْرَةٍ لِي.","Hâdzihi awwalu 'umratin lî.","Ini umrah pertama saya."],
+       ["تَشَرَّفْنَا.","Tasyarrafnâ.","Senang berkenalan."]]},
+  {id:"apotek", w:"الصَّيْدَلِيَّة", t:"Di apotek", role:"Apoteker",
+   roleEn:"a pharmacist in a pharmacy near the hotel",
+   op:{m:{ar:"أَهْلًا، كَيْفَ أَخْدُمُكَ؟",lat:"Ahlan, kaifa akhdumuk?",id:"Halo, ada yang bisa saya bantu?"},
+       f:{ar:"أَهْلًا، كَيْفَ أَخْدُمُكِ؟",lat:"Ahlan, kaifa akhdumuki?",id:"Halo, ada yang bisa saya bantu?"}},
+   ph:[["عِنْدِي صُدَاعٌ.","'Indî shudâ'.","Saya sakit kepala."],
+       ["عِنْدِي حُمَّى وَسُعَالٌ.","'Indî hummâ wa su'âl.","Saya demam dan batuk."],
+       ["أُرِيدُ دَوَاءً لِلزُّكَامِ.","Urîdu dawâ'an liz-zukâm.","Saya mau obat pilek."],
+       ["كَمْ مَرَّةً فِي الْيَوْمِ؟","Kam marratan fil-yaum?","Berapa kali sehari?"]]},
+];
+
+/* Frasa tambahan: setiap situasi jadi 8 frasa */
+const EXTRA = {
+  pesawat:[["مَاذَا عِنْدَكُمْ مِنَ الطَّعَامِ؟","Mâdzâ 'indakum minath-tha'âm?","Ada makanan apa?"],
+           ["أُرِيدُ دَجَاجًا، مِنْ فَضْلِكِ.","Urîdu dajâjan, min fadhliki.","Saya mau (menu) ayam."],
+           ["أَيْنَ دَوْرَةُ الْمِيَاهِ؟","Aina dawratul-miyâh?","Di mana toilet?"]],
+  bandara:[["سَأَبْقَى أُسْبُوعَيْنِ.","Sa-abqâ usbû'ain.","Saya akan tinggal dua minggu."],
+           ["أَنَا مَعَ مَجْمُوعَةٍ مِنْ إِنْدُونِيسِيَا.","Anâ ma'a majmû'atin min Indûnîsiyâ.","Saya bersama rombongan dari Indonesia."],
+           ["حَقِيبَتِي ضَائِعَةٌ.","Haqîbatî dhâ'i'ah.","Koper saya hilang."],
+           ["أَيْنَ الْحَافِلَةُ إِلَى مَكَّةَ؟","Ainal-hâfilatu ilâ Makkah?","Di mana bus ke Makkah?"]],
+  hotel:[["أُرِيدُ مِفْتَاحًا آخَرَ.","Urîdu miftâhan âkhar.","Saya minta kunci satu lagi."],
+         ["هَلْ يُوجَدُ وَاي فَاي؟","Hal yûjadu wâi fâi?","Ada wifi?"],
+         ["الْغُرْفَةُ تَحْتَاجُ إِلَى تَنْظِيفٍ.","Al-ghurfatu tahtâju ilâ tanzhîf.","Kamarnya perlu dibersihkan."],
+         ["كَمْ دَقِيقَةً إِلَى الْحَرَمِ مَشْيًا؟","Kam daqîqatan ilal-harami masyyan?","Berapa menit jalan kaki ke Masjidil Haram?"]],
+  taksi:[["إِلَى الْفُنْدُقِ، مِنْ فَضْلِكَ.","Ilal-funduq, min fadhlik.","Ke hotel, tolong."],
+         ["هَلْ تَعْرِفُ هٰذَا الْعُنْوَانَ؟","Hal ta'rifu hâdzal-'unwân?","Anda tahu alamat ini?"],
+         ["عَلَى مَهْلِكَ، مِنْ فَضْلِكَ.","'Alâ mahlik, min fadhlik.","Pelan-pelan saja, tolong."],
+         ["تَفَضَّلْ، هٰذِهِ عَشَرَةُ رِيَالَاتٍ.","Tafadhdhal, hâdzihi 'asyaratu riyâlât.","Silakan, ini sepuluh riyal."]],
+  pasar:[["هٰذَا كَثِيرٌ، بِخَمْسِينَ؟","Hâdzâ katsîr, bikhamsîn?","Itu terlalu mahal, lima puluh (riyal) boleh?"],
+         ["أُرِيدُ أَنْ أَتَذَوَّقَ.","Urîdu an atadzawwaq.","Saya mau mencicipi."],
+         ["هَلْ هٰذَا تَمْرٌ مِنَ الْمَدِينَةِ؟","Hal hâdzâ tamrun minal-Madînah?","Apakah ini kurma dari Madinah?"],
+         ["ضَعْهُ فِي كِيسٍ، مِنْ فَضْلِكَ.","Dha'hu fî kîs, min fadhlik.","Tolong masukkan ke kantong."]],
+  restoran:[["الْقَائِمَةُ، مِنْ فَضْلِكَ.","Al-qâ'imah, min fadhlik.","Minta menunya."],
+            ["هَلْ هٰذَا حَارٌّ؟","Hal hâdzâ hârr?","Apakah ini pedas?"],
+            ["بِدُونِ سُكَّرٍ، مِنْ فَضْلِكَ.","Bidûni sukkar, min fadhlik.","Tanpa gula, tolong."],
+            ["شَايٌ بِالْحَلِيبِ، مِنْ فَضْلِكَ.","Syâyun bil-halîb, min fadhlik.","Teh susu, tolong."]],
+  arah:[["أَيْنَ مَكَانُ الْوُضُوءِ؟","Aina makânul-wudhû'?","Di mana tempat wudhu?"],
+        ["هَلْ هُوَ قَرِيبٌ أَمْ بَعِيدٌ؟","Hal huwa qarîbun am ba'îd?","Dekat atau jauh?"],
+        ["يَمِينًا أَمْ يَسَارًا؟","Yamînan am yasârâ?","Ke kanan atau ke kiri?"],
+        ["أَيْنَ مَاءُ زَمْزَمَ؟","Aina mâ'u zamzam?","Di mana air zamzam?"]],
+  miqat:[["هَلْ أُصَلِّي رَكْعَتَيْنِ قَبْلَ الْإِحْرَامِ؟","Hal ushallî rak'ataini qablal-ihrâm?","Apakah saya shalat dua rakaat sebelum ihram?"],
+         ["أَيْنَ أَغْتَسِلُ؟","Aina aghtasil?","Di mana saya bisa mandi (sunnah ihram)?"],
+         ["هَلْ يَجُوزُ لُبْسُ النَّعْلِ؟","Hal yajûzu lubsun-na'l?","Bolehkah memakai sandal?"]],
+  thawaf:[["أَيْنَ الْحَجَرُ الْأَسْوَدُ؟","Ainal-hajarul-aswad?","Di mana Hajar Aswad?"],
+          ["هَلْ يُمْكِنُ أَنْ أَطُوفَ فِي الطَّابِقِ الْأَوَّلِ؟","Hal yumkinu an athûfa fith-thâbiqil-awwal?","Bisakah saya thawaf di lantai satu?"],
+          ["انْتَقَضَ وُضُوئِي، مَاذَا أَفْعَلُ؟","Intaqadha wudhû'î, mâdzâ af'al?","Wudhu saya batal, apa yang harus saya lakukan?"]],
+  tahallul:[["هٰذَا قَصِيرٌ جِدًّا!","Hâdzâ qashîrun jiddan!","Ini terlalu pendek!"],
+            ["كَمْ أَدْفَعُ؟","Kam adfa'?","Berapa yang harus saya bayar?"],
+            ["الْحَمْدُ لِلّٰهِ، انْتَهَتْ عُمْرَتِي.","Alhamdulillâh, intahat 'umratî.","Alhamdulillah, umrah saya sudah selesai."]],
+  quba:[["هَلْ نَذْهَبُ مَشْيًا أَمْ بِالْبَاصِ؟","Hal nadzhabu masyyan am bil-bâsh?","Kita jalan kaki atau naik bus?"],
+        ["أَيْنَ نَلْتَقِي بَعْدَ الصَّلَاةِ؟","Aina naltaqî ba'dash-shalâh?","Di mana kita berkumpul setelah shalat?"],
+        ["مَا رَقْمُ الْبَاصِ؟","Mâ raqmul-bâsh?","Nomor busnya berapa?"]],
+  uhud:[["أَيْنَ وَقَفَ الرُّمَاةُ؟","Aina waqafar-rumâh?","Di mana pasukan pemanah dulu berdiri?"],
+        ["مَتَى كَانَتْ غَزْوَةُ أُحُدٍ؟","Matâ kânat ghazwatu Uhud?","Kapan terjadi Perang Uhud?"],
+        ["السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللّٰهُ بِكُمْ لَلَاحِقُونَ","As-salâmu 'alaikum ahlad-diyâri minal-mu'minîna wal-muslimîn, wa innâ in syâ'allâhu bikum lalâhiqûn.","Salam atas kalian, wahai penghuni kubur dari kaum mukminin dan muslimin, dan kami insya Allah akan menyusul kalian. (salam ziarah kubur, HR Muslim)"]],
+  oleh:[["هَلْ عِنْدَكَ لَوْنٌ آخَرُ؟","Hal 'indaka launun âkhar?","Ada warna lain?"],
+        ["هَلْ عِنْدَكَ مَقَاسٌ أَكْبَرُ؟","Hal 'indaka maqâsun akbar?","Ada ukuran yang lebih besar?"],
+        ["غَلِّفْهُ لِي، مِنْ فَضْلِكَ.","Ghallifhu lî, min fadhlik.","Tolong bungkuskan."]],
+  terpisah:[["نَلْتَقِي عِنْدَ بَابِ ...","Naltaqî 'inda bâbi ...","Kami berkumpul di pintu nomor ..."],
+            ["لَا أَتَكَلَّمُ الْعَرَبِيَّةَ جَيِّدًا.","Lâ atakallamul-'arabiyyata jayyidan.","Saya belum lancar berbahasa Arab."],
+            ["تَكَلَّمْ بِبُطْءٍ، مِنْ فَضْلِكَ.","Takallam bibuth', min fadhlik.","Tolong bicara pelan-pelan."]],
+  kenalan:[["مِنْ أَيِّ مَدِينَةٍ أَنْتَ؟","Min ayyi madînatin anta?","Anda dari kota mana?"],
+           ["أَنَا مِنْ جَاكَرْتَا.","Anâ min Jâkartâ.","Saya dari Jakarta."],
+           ["أَنَا أَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ.","Anâ ata'allamul-lughatal-'arabiyyah.","Saya sedang belajar bahasa Arab."],
+           ["اُدْعُ لِي.","Ud'u lî.","Doakan saya."]],
+  apotek:[["عِنْدِي أَلَمٌ فِي الْبَطْنِ.","'Indî alamun fil-bathn.","Saya sakit perut."],
+          ["قَدَمِي تُؤْلِمُنِي مِنَ الْمَشْيِ.","Qadamî tu'limunî minal-masy.","Kaki saya sakit karena banyak berjalan."],
+          ["هَلْ أَحْتَاجُ إِلَى وَصْفَةٍ طِبِّيَّةٍ؟","Hal ahtâju ilâ washfatin thibbiyyah?","Apakah perlu resep dokter?"],
+          ["قَبْلَ الْأَكْلِ أَمْ بَعْدَهُ؟","Qablal-akli am ba'dah?","Diminum sebelum atau sesudah makan?"]]
+};
+for(const s of SCN) if(EXTRA[s.id]) s.ph.push(...EXTRA[s.id]);
+const DOA = [
+  {st:"Perjalanan (safar)", t:"Doa safar", w:"Saat berangkat perjalanan jauh (misalnya naik pesawat ke Jeddah, atau bus Madinah–Makkah), setelah duduk di kendaraan.",
+   ar:"اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ، اللّٰهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هٰذَا الْبِرَّ وَالتَّقْوَى، وَمِنَ الْعَمَلِ مَا تَرْضَى، اللّٰهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هٰذَا وَاطْوِ عَنَّا بُعْدَهُ، اللّٰهُمَّ أَنْتَ الصَّاحِبُ فِي السَّفَرِ، وَالْخَلِيفَةُ فِي الْأَهْلِ، اللّٰهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ وَعْثَاءِ السَّفَرِ، وَكَآبَةِ الْمَنْظَرِ، وَسُوءِ الْمُنْقَلَبِ فِي الْمَالِ وَالْأَهْلِ",
+   lat:"Allâhu akbar, Allâhu akbar, Allâhu akbar. Subhânalladzî sakhkhara lanâ hâdzâ wa mâ kunnâ lahû muqrinîn, wa innâ ilâ rabbinâ lamunqalibûn. Allâhumma innâ nas'aluka fî safarinâ hâdzal-birra wat-taqwâ, wa minal-'amali mâ tardhâ. Allâhumma hawwin 'alainâ safaranâ hâdzâ wathwi 'annâ bu'dah. Allâhumma antash-shâhibu fis-safar, wal-khalîfatu fil-ahl. Allâhumma innî a'ûdzu bika min wa'tsâ'is-safar, wa ka'âbatil-manzhar, wa sû'il-munqalabi fil-mâli wal-ahl.",
+   id:"Allah Mahabesar (3x). Mahasuci Allah yang telah menundukkan kendaraan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya, dan sungguh kami akan kembali kepada Tuhan kami. Ya Allah, kami memohon kepada-Mu dalam perjalanan ini kebaikan dan takwa, serta amal yang Engkau ridai. Ya Allah, mudahkanlah perjalanan kami ini dan dekatkanlah jaraknya. Ya Allah, Engkaulah teman dalam perjalanan dan penjaga bagi keluarga yang ditinggalkan. Ya Allah, aku berlindung kepada-Mu dari letihnya perjalanan, pemandangan yang menyedihkan, dan keadaan buruk saat kembali pada harta dan keluarga.",
+   src:"HR Muslim (hadits Ibnu Umar); QS Az-Zukhruf 13-14"},
+  {st:"Perjalanan (safar)", t:"Naik kendaraan (perjalanan dekat)", w:"Saat naik taksi atau bus untuk perjalanan pendek: \"Bismillâh\" ketika naik, \"Alhamdulillâh\" setelah duduk, lalu lanjutkan.",
+   ar:"بِسْمِ اللّٰهِ، الْحَمْدُ لِلّٰهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+   lat:"Bismillâh, alhamdulillâh, subhânalladzî sakhkhara lanâ hâdzâ wa mâ kunnâ lahû muqrinîn, wa innâ ilâ rabbinâ lamunqalibûn.",
+   id:"Dengan nama Allah. Segala puji bagi Allah. Mahasuci Allah yang telah menundukkan kendaraan ini untuk kami, padahal kami sebelumnya tidak mampu menguasainya, dan sungguh kami akan kembali kepada Tuhan kami.",
+   src:"HR Abu Dawud dan Tirmidzi (hadits Ali); QS Az-Zukhruf 13-14"},
+  {st:"Perjalanan (safar)", t:"Saat naik dan turun", w:"Saat pesawat lepas landas atau jalan menanjak: Allâhu akbar. Saat pesawat turun atau jalan menurun: Subhânallâh.",
+   ar:"اللّٰهُ أَكْبَرُ ... سُبْحَانَ اللّٰهِ",
+   lat:"Allâhu akbar ... Subhânallâh.",
+   id:"Allah Mahabesar (saat naik) ... Mahasuci Allah (saat turun).",
+   src:"HR Bukhari (hadits Jabir)"},
+  {st:"Perjalanan (safar)", t:"Singgah di tempat baru", w:"Saat tiba dan singgah di suatu tempat, misalnya masuk hotel di Makkah atau Madinah.",
+   ar:"أَعُوذُ بِكَلِمَاتِ اللّٰهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+   lat:"A'ûdzu bikalimâtillâhit-tâmmâti min syarri mâ khalaq.",
+   id:"Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan makhluk-Nya.",
+   src:"HR Muslim (hadits Khaulah binti Hakim)"},
+  {st:"Perjalanan (safar)", t:"Saat pulang", w:"Saat perjalanan pulang: baca doa safar di atas, lalu tambahkan bacaan ini.",
+   ar:"آيِبُونَ، تَائِبُونَ، عَابِدُونَ، لِرَبِّنَا حَامِدُونَ",
+   lat:"Âyibûna, tâ'ibûna, 'âbidûna, lirabbinâ hâmidûn.",
+   id:"Kami kembali, bertaubat, beribadah, dan kepada Tuhan kami memuji.",
+   src:"HR Muslim (hadits Ibnu Umar)"},
+  {st:"Masuk Masjidil Haram", t:"Doa masuk masjid", w:"Saat melangkah masuk dengan kaki kanan.",
+   ar:"بِسْمِ اللّٰهِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللّٰهِ، اللّٰهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+   lat:"Bismillâh, wash-shalâtu was-salâmu 'alâ rasûlillâh. Allâhummaftah lî abwâba rahmatik.",
+   id:"Dengan nama Allah, shalawat dan salam atas Rasulullah. Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.",
+   src:"HR Muslim dan Abu Dawud"},
+  {st:"Masuk Masjidil Haram", t:"Talbiyah", w:"Dibaca sejak niat di miqat sampai mulai thawaf. Laki-laki dengan suara agak keras, perempuan pelan.",
+   ar:"لَبَّيْكَ اللّٰهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ",
+   lat:"Labbaikallâhumma labbaik, labbaika lâ syarîka laka labbaik, innal-hamda wan-ni'mata laka wal-mulk, lâ syarîka lak.",
+   id:"Aku penuhi panggilan-Mu, ya Allah, aku penuhi panggilan-Mu. Aku penuhi panggilan-Mu, tiada sekutu bagi-Mu. Sesungguhnya segala puji, nikmat, dan kerajaan adalah milik-Mu, tiada sekutu bagi-Mu.",
+   src:"HR Bukhari dan Muslim"},
+  {st:"Thawaf", t:"Di garis Hajar Aswad", w:"Setiap kali sejajar Hajar Aswad: menghadap ke arahnya dan mengangkat tangan kanan (istilam), di awal dan di setiap putaran.",
+   ar:"بِسْمِ اللّٰهِ، وَاللّٰهُ أَكْبَرُ",
+   lat:"Bismillâhi wallâhu akbar.",
+   id:"Dengan nama Allah, dan Allah Mahabesar.",
+   src:"\"Allâhu akbar\" dari HR Bukhari; tambahan \"Bismillâh\" dari atsar Ibnu Umar (HR Baihaqi)"},
+  {st:"Thawaf", t:"Antara Rukun Yamani dan Hajar Aswad", w:"Di setiap putaran, pada sisi antara Rukun Yamani (sudut sebelum Hajar Aswad) dan Hajar Aswad.",
+   ar:"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً، وَفِي الْآخِرَةِ حَسَنَةً، وَقِنَا عَذَابَ النَّارِ",
+   lat:"Rabbanâ âtinâ fid-dun-yâ hasanah, wa fil-âkhirati hasanah, wa qinâ 'adzâban-nâr.",
+   id:"Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.",
+   src:"HR Abu Dawud; QS Al-Baqarah 201"},
+  {st:"Setelah thawaf", t:"Menuju Maqam Ibrahim", w:"Setelah 7 putaran, sambil menuju Maqam Ibrahim. Lalu shalat 2 rakaat (dianjurkan membaca Al-Kafirun dan Al-Ikhlas).",
+   ar:"وَاتَّخِذُوا مِنْ مَقَامِ إِبْرَاهِيمَ مُصَلًّى",
+   lat:"Wattakhidzû mim maqâmi Ibrâhîma mushallâ.",
+   id:"Dan jadikanlah sebagian Maqam Ibrahim tempat shalat.",
+   src:"QS Al-Baqarah 125; HR Muslim (hadits Jabir)"},
+  {st:"Setelah thawaf", t:"Saat minum zamzam", w:"Minum zamzam setelah shalat 2 rakaat. Boleh berdoa apa saja; doa ini yang sering dibaca.",
+   ar:"اللّٰهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ",
+   lat:"Allâhumma innî as'aluka 'ilman nâfi'â, wa rizqan wâsi'â, wa syifâ'an min kulli dâ'.",
+   id:"Ya Allah, aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang luas, dan kesembuhan dari segala penyakit.",
+   src:"Atsar Ibnu Abbas (HR Daruquthni); kekuatan sanadnya diperselisihkan ulama"},
+  {st:"Sa'i", t:"Mendekati bukit Shafa", w:"Sekali saja, di awal sa'i ketika mendekati Shafa.",
+   ar:"إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللّٰهِ، أَبْدَأُ بِمَا بَدَأَ اللّٰهُ بِهِ",
+   lat:"Innash-shafâ wal-marwata min sya'â'irillâh. Abda'u bimâ bada'allâhu bih.",
+   id:"Sesungguhnya Shafa dan Marwah termasuk syiar Allah. Aku mulai dengan apa yang Allah mulai.",
+   src:"QS Al-Baqarah 158; HR Muslim (hadits Jabir)"},
+  {st:"Sa'i", t:"Di atas Shafa dan Marwah", w:"Setiap kali di atas Shafa dan Marwah: menghadap Ka'bah, mengangkat tangan. Dibaca 3 kali, diselingi doa bebas.",
+   ar:"اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ، اللّٰهُ أَكْبَرُ. لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ، أَنْجَزَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الْأَحْزَابَ وَحْدَهُ",
+   lat:"Allâhu akbar, Allâhu akbar, Allâhu akbar. Lâ ilâha illallâhu wahdahû lâ syarîka lah, lahul-mulku wa lahul-hamdu, wa huwa 'alâ kulli syai'in qadîr. Lâ ilâha illallâhu wahdah, anjaza wa'dah, wa nashara 'abdah, wa hazamal-ahzâba wahdah.",
+   id:"Allah Mahabesar (3x). Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan pujian, dan Dia Mahakuasa atas segala sesuatu. Tiada tuhan selain Allah semata; Dia menepati janji-Nya, menolong hamba-Nya, dan mengalahkan pasukan sekutu sendirian.",
+   src:"HR Muslim (hadits Jabir)"},
+  {st:"Sa'i", t:"Di antara dua lampu hijau", w:"Di jalur bertanda lampu hijau, laki-laki berlari kecil; perempuan berjalan biasa.",
+   ar:"رَبِّ اغْفِرْ وَارْحَمْ، إِنَّكَ أَنْتَ الْأَعَزُّ الْأَكْرَمُ",
+   lat:"Rabbighfir warham, innaka antal-a'azzul-akram.",
+   id:"Ya Tuhanku, ampunilah dan rahmatilah. Sesungguhnya Engkau Mahaperkasa lagi Mahamulia.",
+   src:"Atsar Ibnu Mas'ud dan Ibnu Umar (HR Ibnu Abi Syaibah)"}
+];
+const DZIKIR = [
+  {t:"Ayat Kursi", n:1, w:"Diawali ta'awwudz (A'ûdzu billâhi minasy-syaithânir-rajîm).",
+   ar:"اللّٰهُ لَا إِلٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ، لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ، مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ، يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ، وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ، وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ، وَلَا يَئُودُهُ حِفْظُهُمَا، وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+   lat:"Allâhu lâ ilâha illâ huwal-hayyul-qayyûm, lâ ta'khudzuhû sinatuw wa lâ naum, lahû mâ fis-samâwâti wa mâ fil-ardh, man dzalladzî yasyfa'u 'indahû illâ bi-idznih, ya'lamu mâ baina aidîhim wa mâ khalfahum, wa lâ yuhîthûna bisyai'im min 'ilmihî illâ bimâ syâ', wasi'a kursiyyuhus-samâwâti wal-ardh, wa lâ ya'ûduhû hifzhuhumâ, wa huwal-'aliyyul-'azhîm.",
+   id:"Allah, tiada tuhan selain Dia, Yang Mahahidup lagi terus-menerus mengurus makhluk-Nya. Dia tidak mengantuk dan tidak tidur. Milik-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan dan di belakang mereka, dan mereka tidak mengetahui sedikit pun ilmu-Nya kecuali yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak merasa berat memelihara keduanya. Dia Mahatinggi lagi Mahaagung.",
+   src:"QS Al-Baqarah 255; HR Nasa'i (As-Sunan Al-Kubra) dan Hakim"},
+  {t:"Surat Al-Ikhlas", n:3, w:"Al-Ikhlas, Al-Falaq, dan An-Nas dibaca masing-masing 3 kali, diawali basmalah.",
+   ar:"قُلْ هُوَ اللّٰهُ أَحَدٌ، اللّٰهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
+   lat:"Qul huwallâhu ahad. Allâhush-shamad. Lam yalid wa lam yûlad. Wa lam yakul lahû kufuwan ahad.",
+   id:"Katakanlah: Dialah Allah Yang Maha Esa. Allah tempat bergantung segala sesuatu. Dia tidak beranak dan tidak diperanakkan. Dan tidak ada sesuatu pun yang setara dengan-Nya.",
+   src:"HR Abu Dawud dan Tirmidzi"},
+  {t:"Surat Al-Falaq", n:3, w:"Lanjutan dari Al-Ikhlas.",
+   ar:"قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+   lat:"Qul a'ûdzu birabbil-falaq. Min syarri mâ khalaq. Wa min syarri ghâsiqin idzâ waqab. Wa min syarrin-naffâtsâti fil-'uqad. Wa min syarri hâsidin idzâ hasad.",
+   id:"Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh, dari kejahatan makhluk-Nya, dari kejahatan malam apabila telah gelap gulita, dari kejahatan para penyihir yang meniup pada buhul-buhul, dan dari kejahatan orang yang dengki apabila ia dengki.",
+   src:"HR Abu Dawud dan Tirmidzi"},
+  {t:"Surat An-Nas", n:3, w:"Lanjutan dari Al-Falaq.",
+   ar:"قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلٰهِ النَّاسِ، مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَالنَّاسِ",
+   lat:"Qul a'ûdzu birabbin-nâs. Malikin-nâs. Ilâhin-nâs. Min syarril-waswâsil-khannâs. Alladzî yuwaswisu fî shudûrin-nâs. Minal-jinnati wan-nâs.",
+   id:"Katakanlah: Aku berlindung kepada Tuhan manusia, Raja manusia, Sembahan manusia, dari kejahatan bisikan setan yang bersembunyi, yang membisikkan ke dalam dada manusia, dari golongan jin dan manusia.",
+   src:"HR Abu Dawud dan Tirmidzi"},
+  {t:"Ashbahnâ / Amsainâ", n:1, w:"Pembuka dzikir pagi atau petang.",
+   ar:"أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلّٰهِ، وَالْحَمْدُ لِلّٰهِ، لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هٰذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هٰذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ",
+   lat:"Ashbahnâ wa ashbahal-mulku lillâh, wal-hamdu lillâh, lâ ilâha illallâhu wahdahû lâ syarîka lah, lahul-mulku wa lahul-hamdu wa huwa 'alâ kulli syai'in qadîr. Rabbi as'aluka khaira mâ fî hâdzal-yaumi wa khaira mâ ba'dah, wa a'ûdzu bika min syarri mâ fî hâdzal-yaumi wa syarri mâ ba'dah. Rabbi a'ûdzu bika minal-kasali wa sû'il-kibar. Rabbi a'ûdzu bika min 'adzâbin fin-nâri wa 'adzâbin fil-qabr.",
+   id:"Kami memasuki pagi dan kerajaan milik Allah pun memasuki pagi. Segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya; milik-Nya kerajaan dan pujian, dan Dia Mahakuasa atas segala sesuatu. Ya Tuhanku, aku memohon kebaikan hari ini dan sesudahnya, dan berlindung dari keburukan hari ini dan sesudahnya. Ya Tuhanku, aku berlindung dari kemalasan dan buruknya masa tua. Ya Tuhanku, aku berlindung dari azab neraka dan azab kubur.",
+   pt:{ar:"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلّٰهِ، وَالْحَمْدُ لِلّٰهِ، لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هٰذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هٰذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ",
+       lat:"Amsainâ wa amsal-mulku lillâh, wal-hamdu lillâh, lâ ilâha illallâhu wahdahû lâ syarîka lah, lahul-mulku wa lahul-hamdu wa huwa 'alâ kulli syai'in qadîr. Rabbi as'aluka khaira mâ fî hâdzihil-lailati wa khaira mâ ba'dahâ, wa a'ûdzu bika min syarri mâ fî hâdzihil-lailati wa syarri mâ ba'dahâ. Rabbi a'ûdzu bika minal-kasali wa sû'il-kibar. Rabbi a'ûdzu bika min 'adzâbin fin-nâri wa 'adzâbin fil-qabr.",
+       id:"Kami memasuki petang dan kerajaan milik Allah pun memasuki petang. Segala puji bagi Allah. Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya; milik-Nya kerajaan dan pujian, dan Dia Mahakuasa atas segala sesuatu. Ya Tuhanku, aku memohon kebaikan malam ini dan sesudahnya, dan berlindung dari keburukan malam ini dan sesudahnya. Ya Tuhanku, aku berlindung dari kemalasan dan buruknya masa tua. Ya Tuhanku, aku berlindung dari azab neraka dan azab kubur."},
+   src:"HR Muslim"},
+  {t:"Allâhumma bika ashbahnâ", n:1, w:"",
+   ar:"اللّٰهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ",
+   lat:"Allâhumma bika ashbahnâ, wa bika amsainâ, wa bika nahyâ, wa bika namûtu, wa ilaikan-nusyûr.",
+   id:"Ya Allah, dengan-Mu kami memasuki pagi dan petang, dengan-Mu kami hidup dan mati, dan kepada-Mu kebangkitan.",
+   pt:{ar:"اللّٰهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ",
+       lat:"Allâhumma bika amsainâ, wa bika ashbahnâ, wa bika nahyâ, wa bika namûtu, wa ilaikal-mashîr.",
+       id:"Ya Allah, dengan-Mu kami memasuki petang dan pagi, dengan-Mu kami hidup dan mati, dan kepada-Mu tempat kembali."},
+   src:"HR Tirmidzi dan Abu Dawud"},
+  {t:"Sayyidul istighfar", n:1, w:"Penghulu istighfar.",
+   ar:"اللّٰهُمَّ أَنْتَ رَبِّي لَا إِلٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+   lat:"Allâhumma anta rabbî lâ ilâha illâ ant, khalaqtanî wa anâ 'abduk, wa anâ 'alâ 'ahdika wa wa'dika mastatha'tu, a'ûdzu bika min syarri mâ shana'tu, abû'u laka bini'matika 'alayya, wa abû'u bidzanbî, faghfir lî, fa innahû lâ yaghfirudz-dzunûba illâ ant.",
+   id:"Ya Allah, Engkau Tuhanku, tiada tuhan selain Engkau. Engkau menciptakanku dan aku hamba-Mu. Aku berpegang pada janji dan ikrarku kepada-Mu semampuku. Aku berlindung kepada-Mu dari keburukan perbuatanku. Aku mengakui nikmat-Mu kepadaku dan mengakui dosaku, maka ampunilah aku. Sesungguhnya tiada yang mengampuni dosa selain Engkau.",
+   src:"HR Bukhari"},
+  {t:"Bismillâhilladzî lâ yadhurru", n:3, w:"",
+   ar:"بِسْمِ اللّٰهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ",
+   lat:"Bismillâhilladzî lâ yadhurru ma'asmihî syai'un fil-ardhi wa lâ fis-samâ', wa huwas-samî'ul-'alîm.",
+   id:"Dengan nama Allah, yang bersama nama-Nya tiada sesuatu pun di bumi maupun di langit dapat membahayakan, dan Dialah Yang Maha Mendengar lagi Maha Mengetahui.",
+   src:"HR Abu Dawud dan Tirmidzi"},
+  {t:"Radhîtu billâhi rabbâ", n:3, w:"",
+   ar:"رَضِيتُ بِاللّٰهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللّٰهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا",
+   lat:"Radhîtu billâhi rabbâ, wa bil-islâmi dînâ, wa bi-Muhammadin shallallâhu 'alaihi wa sallama nabiyyâ.",
+   id:"Aku rida Allah sebagai Tuhan, Islam sebagai agama, dan Muhammad ﷺ sebagai nabi.",
+   src:"HR Abu Dawud"},
+  {t:"Yâ Hayyu yâ Qayyûm", n:1, w:"",
+   ar:"يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ",
+   lat:"Yâ hayyu yâ qayyûm, birahmatika astaghîts, ashlih lî sya'nî kullah, wa lâ takilnî ilâ nafsî tharfata 'ain.",
+   id:"Wahai Yang Mahahidup, wahai Yang terus-menerus mengurus makhluk-Nya, dengan rahmat-Mu aku memohon pertolongan. Perbaikilah seluruh urusanku, dan jangan serahkan aku kepada diriku sendiri walau sekejap mata.",
+   src:"HR Nasa'i (As-Sunan Al-Kubra) dan Hakim"},
+  {t:"Hasbiyallâh", n:7, w:"",
+   ar:"حَسْبِيَ اللّٰهُ لَا إِلٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",
+   lat:"Hasbiyallâhu lâ ilâha illâ huw, 'alaihi tawakkaltu wa huwa rabbul-'arsyil-'azhîm.",
+   id:"Cukuplah Allah bagiku, tiada tuhan selain Dia. Kepada-Nya aku bertawakal, dan Dia Tuhan pemilik Arsy yang agung.",
+   src:"HR Abu Dawud (dari Abu Darda'; sebagian ulama menilai riwayat ini mauquf, yaitu ucapan sahabat)"},
+  {t:"A'ûdzu bikalimâtillâh", n:3, only:"petang", w:"Khusus petang.",
+   ar:"أَعُوذُ بِكَلِمَاتِ اللّٰهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+   lat:"A'ûdzu bikalimâtillâhit-tâmmâti min syarri mâ khalaq.",
+   id:"Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan makhluk-Nya.",
+   src:"HR Tirmidzi dan Ahmad"},
+  {t:"Tahlil", n:10, w:"",
+   ar:"لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+   lat:"Lâ ilâha illallâhu wahdahû lâ syarîka lah, lahul-mulku wa lahul-hamdu, wa huwa 'alâ kulli syai'in qadîr.",
+   id:"Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan pujian, dan Dia Mahakuasa atas segala sesuatu.",
+   src:"HR Nasa'i (10 kali di pagi hari); HR Bukhari dan Muslim (100 kali sehari)"},
+  {t:"Subhânallâhi wa bihamdih", n:100, w:"",
+   ar:"سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ",
+   lat:"Subhânallâhi wa bihamdih.",
+   id:"Mahasuci Allah dan segala puji bagi-Nya.",
+   src:"HR Muslim"}
+];
+const STARTER = [
+  ["مَاءٌ","Mâ'","air"],["شُكْرًا","Syukran","terima kasih"],["فُنْدُقٌ","Funduq","hotel"],["غُرْفَةٌ","Ghurfah","kamar"],
+  ["مَسْجِدٌ","Masjid","masjid"],["طَوَافٌ","Thawâf","mengelilingi Ka'bah"],["سَعْيٌ","Sa'y","berjalan antara Shafa dan Marwah"],
+  ["إِحْرَامٌ","Ihrâm","ihram"],["جَوَازُ السَّفَرِ","Jawâzus-safar","paspor"],["حَقِيبَةٌ","Haqîbah","koper / tas"],
+  ["كَمْ؟","Kam?","berapa?"],["أَيْنَ؟","Aina?","di mana?"],["تَمْرٌ","Tamr","kurma"],["دَوَاءٌ","Dawâ'","obat"],
+  ["غَالٍ","Ghâlin","mahal"],["رَخِيصٌ","Rakhîsh","murah"],["طَعَامٌ","Tha'âm","makanan"],["يَمِينٌ","Yamîn","kanan"],
+  ["يَسَارٌ","Yasâr","kiri"],["شَوْطٌ","Syauth","satu putaran (thawaf/sa'i)"]
+].map(([ar, lat, id]) => ({ar, lat, id, cat:"dasar"})).concat(
+  [["وَاحِدٌ","Wâhid","1 (satu)"],["اِثْنَانِ","Itsnân","2 (dua)"],["ثَلَاثَةٌ","Tsalâtsah","3 (tiga)"],["أَرْبَعَةٌ","Arba'ah","4 (empat)"],
+   ["خَمْسَةٌ","Khamsah","5 (lima)"],["سِتَّةٌ","Sittah","6 (enam)"],["سَبْعَةٌ","Sab'ah","7 (tujuh)"],["ثَمَانِيَةٌ","Tsamâniyah","8 (delapan)"],
+   ["تِسْعَةٌ","Tis'ah","9 (sembilan)"],["عَشَرَةٌ","'Asyarah","10 (sepuluh)"]].map(([ar, lat, id]) => ({ar, lat, id, cat:"angka"})),
+  [["يَوْمُ الْأَحَدِ","Yaumul-ahad","Minggu"],["يَوْمُ الِاثْنَيْنِ","Yaumul-itsnain","Senin"],["يَوْمُ الثُّلَاثَاءِ","Yaumuts-tsulâtsâ'","Selasa"],
+   ["يَوْمُ الْأَرْبِعَاءِ","Yaumul-arbi'â'","Rabu"],["يَوْمُ الْخَمِيسِ","Yaumul-khamîs","Kamis"],["يَوْمُ الْجُمُعَةِ","Yaumul-jumu'ah","Jumat"],
+   ["يَوْمُ السَّبْتِ","Yaumus-sabt","Sabtu"]].map(([ar, lat, id]) => ({ar, lat, id, cat:"hari"})));
+const BRAND = null;
+
+/* ---------- Alat bantu ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle = a => { for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const tidy = s => String(s).replace(/\s*\.\.\.\s*/g, " ").replace(/\s+([.،؟!?])/g, "$1").trim();
+const toks = ar => ar.replace(/[.،؟!?]/g, "").trim().split(/\s+/).filter(Boolean);
+const pad = n => String(n).padStart(2, "0");
+const ymd = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const today = () => ymd(new Date());
+const SITE_URL = "https://hendiwahyu.github.io/hiwar-umrah/";
+
+const IC = {
+  fire:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.2-1 5.1-2.6 6.9C7.9 10.6 6.5 12.2 6.5 15a5.5 5.5 0 0 0 11 0c0-2.3-1.1-4-2.2-5.2-.2 1.4-.9 2.4-1.9 2.9.4-3.6-.4-7.6-1.4-10.7z"/></svg>',
+  bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 4 13.5h6.5L9.5 22 20 9.5h-6.6z"/></svg>',
+  vol:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h4l5 4v-13l-5 4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
+  home:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 21 7.7v8.6L12 21.5 3 16.3V7.7z" opacity=".25"/><path d="M12 6.5 17 9.4v5.2l-5 2.9-5-2.9V9.4z"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5C5.5 4.3 8.5 4.3 11 6v13c-2.5-1.6-5.5-1.6-8-.4zM21 5.5c-2.5-1.2-5.5-1.2-8 .5v13c2.5-1.6 5.5-1.6 8-.4z"/></svg>',
+  trophy:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v2h3v2a5 5 0 0 1-4.3 5A5 5 0 0 1 13 15v3h3v3H8v-3h3v-3a5 5 0 0 1-2.7-3A5 5 0 0 1 4 7V5h3zm0 4H6a3 3 0 0 0 1 2.2zm10 0v2.2A3 3 0 0 0 18 7z"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></svg>',
+  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>',
+  target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+};
+
+/* ---------- Maskot: Jamal si unta ---------- */
+let MID = 0;
+function mascot(mood, cls){
+  const happy = mood === "happy", cid = "mc" + (MID++);
+  const logo = BRAND ? `<clipPath id="${cid}"><circle cx="57" cy="71.5" r="11"/></clipPath><circle cx="57" cy="71.5" r="12.6" fill="#fff" stroke="#3BB54A" stroke-width="1.6"/><image href="${BRAND.logo}" x="44" y="58.5" width="26" height="26" clip-path="url(#${cid})"/>` : "";
+  return `<svg class="masc ${cls || ""}" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<ellipse cx="60" cy="113" rx="36" ry="5" fill="#000" opacity=".1"/>
+<path d="M29 70q-9 5-6 16" stroke="#C98B45" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+<g fill="#C98B45"><rect x="35" y="80" width="10" height="29" rx="5"/><rect x="48" y="82" width="10" height="27" rx="5"/><rect x="69" y="82" width="10" height="27" rx="5"/><rect x="82" y="80" width="10" height="29" rx="5"/></g>
+<ellipse cx="60" cy="73" rx="33" ry="17" fill="#E7B46A"/>
+<ellipse cx="57" cy="57" rx="17" ry="15" fill="#E7B46A"/>
+<path d="M40 59h34a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H40a5 5 0 0 1-5-5V64a5 5 0 0 1 5-5z" fill="#5E3714"/>
+<rect x="35" y="69.3" width="44" height="4.5" fill="#3BB54A"/>${logo}
+<path d="M84 69C92 59 95 47 95 36" stroke="#E7B46A" stroke-width="15" fill="none" stroke-linecap="round"/>
+<ellipse cx="88" cy="25" rx="4" ry="6.5" fill="#D9A055" transform="rotate(-20 88 25)"/>
+<ellipse cx="99" cy="32" rx="15" ry="11.5" fill="#E7B46A"/>
+<ellipse cx="111" cy="35.5" rx="5.5" ry="6" fill="#D9A055"/>
+<path d="M89.5 23.5Q99 11 109.5 21.5L108.5 24.5Q99 21 90.5 26.5Z" fill="#3BB54A"/>
+${happy ? '<path d="M95.5 30q3.8-4.5 7.6 0" stroke="#3A2410" stroke-width="2.8" fill="none" stroke-linecap="round"/>'
+        : '<circle cx="100" cy="29.5" r="3.8" fill="#3A2410"/><circle cx="101.3" cy="28.2" r="1.3" fill="#fff"/>'}
+<circle cx="104.5" cy="37.5" r="3" fill="#F28C8C" opacity=".6"/>
+<circle cx="113.5" cy="33" r="1.1" fill="#3A2410"/>
+${happy ? '<path d="M106.5 40.5q3.5 4 7 0" stroke="#3A2410" stroke-width="2.2" fill="#3A2410" stroke-linecap="round"/>'
+        : '<path d="M108 41.5q2.6 1.6 5.2 0" stroke="#3A2410" stroke-width="2.1" fill="none" stroke-linecap="round"/>'}
+</svg>`;
+}
+
+/* ---------- Data pelajaran ---------- */
+const WORDNODES = [
+  {id:"w-dasar", w:"كَلِمَات", t:"Kata penting umrah", role:"20 kata dasar", words:true, cat:"dasar"},
+  {id:"w-angka", w:"أَرْقَام", t:"Angka 1–10", role:"Untuk menghitung dan menawar", words:true, cat:"angka"},
+  {id:"w-hari", w:"أَيَّام", t:"Nama hari", role:"Untuk jadwal dan janji", words:true, cat:"hari"}
+];
+WORDNODES.forEach(n => { n.ph = STARTER.filter(w => w.cat === n.cat).map(w => [w.ar, w.lat, w.id]); });
+const NODES = [...WORDNODES, ...SCN];
+const UNITS = [
+  {n:"Kosakata dasar", a:"المُفْرَدَات", ids:["w-dasar","w-angka","w-hari"]},
+  {n:"Berangkat & tiba", a:"السَّفَر", ids:["pesawat","bandara","hotel"]},
+  {n:"Manasik umrah", a:"العُمْرَة", ids:["miqat","thawaf","tahallul"]},
+  {n:"Sehari-hari di Makkah", a:"مَكَّة", ids:["taksi","pasar","restoran","arah","terpisah","apotek"]},
+  {n:"Madinah & ziarah", a:"المَدِينَة", ids:["quba","uhud","oleh","kenalan"]}
+];
+const ORDER = UNITS.flatMap(u => u.ids);
+const node = id => NODES.find(n => n.id === id);
+const phrasesOf = n => n.ph.map(([ar, lat, id]) => ({ar: tidy(ar), lat: tidy(lat), id, dots: ar.includes("...")}));
+const ALLP = NODES.flatMap(phrasesOf);
+const GOALS = [{v:10, n:"Santai", d:"5 menit sehari"}, {v:20, n:"Rutin", d:"10 menit sehari"}, {v:30, n:"Serius", d:"15 menit sehari"}];
+
+/* ---------- Penyimpanan kemajuan (di HP ini) ---------- */
+const KEY = "hiwar2";
+const fresh = () => ({v:1, prof:null, since:today(), xp:0, days:{}, done:{}, best:0, perfect:0, lessons:0, badges:{}, set:{rate:0.8, sfx:true, lat:true}});
+let S = (() => { try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.v === 1) return Object.assign(fresh(), s, {set:Object.assign(fresh().set, s.set)}); }catch{} return fresh(); })();
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch{} };
+const todayXP = () => S.days[today()] || 0;
+function streak(){
+  const d = new Date(); let n = 0;
+  if(!S.days[ymd(d)]) d.setDate(d.getDate() - 1);
+  while(S.days[ymd(d)] > 0){ n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function weekDays(){
+  const d = new Date(); const dow = (d.getDay() + 6) % 7; d.setDate(d.getDate() - dow);
+  return Array.from({length:7}, (_, i) => { const x = new Date(d); x.setDate(d.getDate() + i); return ymd(x); });
+}
+const weekXP = () => weekDays().reduce((a, k) => a + (S.days[k] || 0), 0);
+const isAvail = id => { const i = ORDER.indexOf(id); return i === 0 || (S.done[ORDER[i - 1]] || 0) > 0 || (S.done[id] || 0) > 0; };
+const currentId = () => ORDER.find(id => !(S.done[id] > 0)) || null;
+const unitDone = i => UNITS[i].ids.every(id => (S.done[id] || 0) > 0);
+
+const BADGES = [
+  {id:"mulai", n:"Langkah Pertama", d:"Menyelesaikan pelajaran pertama", g:"١", c:"#3BB54A", s:"#2C9139", ok:() => S.lessons >= 1},
+  {id:"dasar", n:"Bekal Kosakata", d:"Menuntaskan Kosakata dasar", g:"ك", c:"#58A8D6", s:"#3F86B0", ok:() => unitDone(0)},
+  {id:"terbang", n:"Siap Terbang", d:"Menuntaskan Berangkat & tiba", g:"ط", c:"#1CB0F6", s:"#1690CB", ok:() => unitDone(1)},
+  {id:"miqat", n:"Lulus Miqat", d:"Menyelesaikan situasi Miqat & niat ihram", g:"م", c:"#8C5A2B", s:"#6B4320", ok:() => (S.done.miqat || 0) > 0},
+  {id:"manasik", n:"Paham Manasik", d:"Menuntaskan Manasik umrah", g:"ع", c:"#2C9139", s:"#1F6E2A", ok:() => unitDone(2)},
+  {id:"sempurna", n:"Tanpa Cela", d:"Pelajaran tanpa satu pun salah", g:"١٠٠", c:"#FFB400", s:"#E09A00", ok:() => S.perfect >= 1},
+  {id:"kombo", n:"Kombo 10", d:"10 jawaban benar berturut-turut", g:"١٠", c:"#CE82FF", s:"#A35FD6", ok:() => S.best >= 10},
+  {id:"putaran", n:"7 Putaran", d:"Belajar 7 hari berturut-turut", g:"٧", c:"#FF9600", s:"#D97F00", ok:() => streak() >= 7},
+  {id:"rajin", n:"Rajin Belajar", d:"Mengumpulkan 500 XP", g:"٥٠٠", c:"#1CB0F6", s:"#1690CB", ok:() => S.xp >= 500},
+  {id:"teladan", n:"Jamaah Teladan", d:"Mengumpulkan 1.000 XP", g:"★", c:"#E5484D", s:"#C23A3E", ok:() => S.xp >= 1000},
+  {id:"khatam", n:"Khatam Hiwar", d:"Menyelesaikan semua situasi", g:"خ", c:"#5E3714", s:"#3F240C", ok:() => ORDER.every(id => (S.done[id] || 0) > 0)},
+  {id:"istiqamah", n:"Istiqamah", d:"Belajar 30 hari berturut-turut", g:"٣٠", c:"#FF4B4B", s:"#D63B3B", ok:() => streak() >= 30}
+];
+const HEXP = "50,3 93,27 93,77 50,101 7,77 7,27", HEXS = "50,9 93,33 93,83 50,107 7,83 7,33";
+function badgeSVG(b, locked){
+  const c = locked ? "#CFD3CD" : b.c, s = locked ? "#B3B8B1" : b.s, fs = b.g.length > 2 ? 26 : b.g.length > 1 ? 34 : 44;
+  return `<svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="${HEXS}" fill="${s}"/><polygon points="${HEXP}" fill="${c}"/><polygon points="50,15 82,33 82,71 50,89 18,71 18,33" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3"/><text x="50" y="54" text-anchor="middle" dominant-baseline="central" font-family="Nunito,'Noto Naskh Arabic',sans-serif" font-weight="900" font-size="${fs}" fill="#fff">${locked ? "?" : esc(b.g)}</text></svg>`;
+}
+
+/* ---------- Suara ---------- */
+let arVoice = null;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  const vs = speechSynthesis.getVoices().filter(v => /^ar/i.test(v.lang));
+  arVoice = vs.find(v => /SA/i.test(v.lang)) || vs[0] || null;
+}
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text, rate){
+  if(!("speechSynthesis" in window) || !text) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(tidy(text));
+  u.lang = arVoice ? arVoice.lang : "ar-SA"; if(arVoice) u.voice = arVoice;
+  u.rate = rate || S.set.rate;
+  speechSynthesis.speak(u);
+}
+let actx = null;
+function tone(fs, dur, type){
+  if(!S.set.sfx) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const t = actx.currentTime;
+    fs.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t + i * dur);
+      g.gain.exponentialRampToValueAtTime(0.16, t + i * dur + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + i * dur + dur);
+      o.connect(g).connect(actx.destination); o.start(t + i * dur); o.stop(t + i * dur + dur + 0.03);
+    });
+  }catch{}
+}
+const sfxOk = () => tone([660, 990], 0.11), sfxBad = () => tone([240, 190], 0.15, "triangle"), sfxWin = () => tone([523, 659, 784, 1047], 0.12);
+
+/* ---------- Lembar bawah ---------- */
+function openSheet(html){ const w = $("#sheet"); w.innerHTML = `<div class="sh-bg" data-act="closeSheet"></div><div class="sh" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div>`; w.hidden = false; }
+function closeSheet(){ const w = $("#sheet"); w.hidden = true; w.innerHTML = ""; }
+
+/* ---------- Halaman utama ---------- */
+let TAB = "path", RD = "doa", WAKTU = new Date().getHours() < 14 ? "pagi" : "petang", CNT = {}, OB = 0, OBD = {name:"", gender:"m", goal:20};
+const NAV = [["path","Belajar","home"],["read","Bacaan","book"],["rank","Peringkat","trophy"],["me","Profil","user"]];
+
+function render(){
+  const app = $("#app");
+  if(!S.prof){ app.innerHTML = viewOnboard(); return; }
+  app.innerHTML = ({path:viewPath, read:viewRead, rank:viewRank, me:viewMe})[TAB]() +
+    `<nav class="bn">${NAV.map(([k, l, i]) => `<button data-act="tab" data-t="${k}" ${TAB === k ? 'aria-current="page"' : ""}>${IC[i]}${l}</button>`).join("")}</nav>`;
+}
+function topbar(){
+  const st = streak(), tx = todayXP(), g = S.prof.goal, p = Math.min(1, tx / g), C = 2 * Math.PI * 14;
+  return `<header class="tb">${BRAND ? `<img class="tb-logo" src="${BRAND.logo}" alt="">` : ""}<div class="tb-title">Hiwar Umrah</div>
+  <span class="chip fire ${todayXP() ? "" : "off"}" title="Runtunan hari">${IC.fire}${st}</span>
+  <span class="chip xp" title="Total XP">${IC.bolt}${S.xp}</span>
+  <span class="ring" title="Target hari ini ${tx}/${g} XP"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="14" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="17" cy="17" r="14" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - p)}"/></svg><b>${Math.round(p * 100)}%</b></span></header>`;
+}
+const OFFS = [0, 46, 72, 46, 0, -46, -72, -46];
+function viewPath(){
+  const cur = currentId(), tx = todayXP(), g = S.prof.goal;
+  const msg = !S.lessons ? `Ahlan, ${esc(S.prof.name)}! Ketuk tombol hijau untuk pelajaran pertama.`
+    : tx >= g ? `Mâsyâ Allâh, target hari ini tercapai! Mau menambah lagi?`
+    : `Ahlan, ${esc(S.prof.name)}! Hari ini ${tx} dari ${g} XP. Yuk lanjut.`;
+  let h = topbar() + `<div class="scr"><div class="hello">${mascot("idle", "sm bounce")}<div class="bub">${msg}</div></div>`;
+  UNITS.forEach((u, ui) => {
+    h += `<section class="unit"><div class="ub u${ui}"><div><small>BAGIAN ${ui + 1}</small><b>${esc(u.n)}</b></div><span class="ar" lang="ar">${esc(u.a)}</span></div><div class="nodes">`;
+    u.ids.forEach((id, k) => {
+      const n = node(id), d = S.done[id] || 0, av = isAvail(id), isCur = id === cur;
+      const st = d ? "done" : av ? "av" : "lock";
+      h += `<div class="nd ${isCur ? "pulse" : ""}" style="--x:${OFFS[(k + ui * 2) % OFFS.length]}px">${isCur ? '<div class="tip">MULAI</div>' : ""}
+        <button class="hex ${st}" data-act="node" data-id="${id}" aria-label="${esc(n.t)}"><svg class="hx" viewBox="0 0 100 110"><polygon class="s" points="${HEXS}"/><polygon class="f" points="${HEXP}"/></svg><span class="ic">${d ? IC.check : av ? IC.star : IC.lock}</span></button>
+        <div class="nd-l">${esc(n.t)}</div><div class="pips">${[0, 1, 2].map(i => `<i class="${i < d ? "on" : ""}"></i>`).join("")}</div></div>`;
+    });
+    h += `</div></section>`;
+  });
+  if(BRAND) h += `<div class="credit"><img src="${BRAND.logo}" alt=""><span>Persembahan ${esc(BRAND.name)}</span></div>`;
+  return h + `</div>`;
+}
+
+function openNode(id){
+  const n = node(id), d = S.done[id] || 0, av = isAvail(id), prev = node(ORDER[ORDER.indexOf(id) - 1] || id);
+  openSheet(`<div class="ns"><div class="ns-ar" lang="ar">${esc(n.w)}</div><h3>${esc(n.t)}</h3>
+    <p class="muted">${n.words ? esc(n.role) : "Lawan bicara: " + esc(n.role)}</p>
+    <p>Level ${Math.min(d, 3)} dari 3${d >= 3 ? " · latihan ulang tetap dapat XP" : ""}</p>
+    ${!av ? `<p class="warn">Disarankan selesaikan dulu “${esc(prev.t)}”, tapi boleh langsung dicoba.</p>` : ""}
+    <div class="stack"><button class="b pri" data-act="start" data-id="${id}">${d ? "Latihan lagi" : "Mulai"} · +10 XP</button>
+    <button class="b" data-act="phr" data-id="${id}">Lihat ${n.ph.length} ${n.words ? "kata" : "frasa"}</button></div></div>`);
+}
+function openPhrases(id){
+  const n = node(id);
+  openSheet(`<h3>${esc(n.t)}</h3><p class="muted" style="margin:0 0 6px">Ketuk tombol suara, lalu tirukan dengan suara keras.</p>` +
+    phrasesOf(n).map(p => `<div class="ph"><div class="ar" lang="ar">${esc(p.ar)}</div>${S.set.lat ? `<div class="lt">${esc(p.lat)}</div>` : ""}<div class="id">${esc(p.id)}</div>
+      <div class="acts"><button class="spk" data-act="say" data-t="${esc(p.ar)}" aria-label="Dengar">${IC.vol}</button><button class="spk slow" data-act="slow" data-t="${esc(p.ar)}">PELAN</button></div></div>`).join("") +
+    `<div class="stack" style="margin-top:14px"><button class="b pri" data-act="start" data-id="${id}">Mulai pelajaran</button></div>`);
+}
+
+/* ---------- Mesin pelajaran ---------- */
+function optsFrom(p, P, key){
+  const seen = new Set([p[key]]), out = [p];
+  for(const x of shuffle(P.slice()).concat(shuffle(ALLP.slice()))){
+    if(out.length >= 4) break;
+    if(!seen.has(x[key]) && !seen.has(x.id) && x.id !== p.id){ seen.add(x[key]); seen.add(x.id); out.push(x); }
+  }
+  return shuffle(out);
+}
+function makeQ(type, p, P){
+  const q = {type, p};
+  if(type === "listen" || type === "ar2id") q.opts = optsFrom(p, P, "id");
+  else if(type === "id2ar") q.opts = optsFrom(p, P, "ar");
+  else if(type === "arrange"){
+    const w = toks(p.ar);
+    const extra = [...new Set(ALLP.flatMap(x => toks(x.ar)))].filter(t => !w.includes(t));
+    q.ans = w; q.bank = shuffle([...w, ...shuffle(extra).slice(0, w.length > 4 ? 3 : 2)]);
+  }else if(type === "fill"){
+    const w = toks(p.ar), k = Math.floor(Math.random() * w.length);
+    q.words = w; q.k = k;
+    q.opts = shuffle([w[k], ...shuffle([...new Set(ALLP.flatMap(x => toks(x.ar)))].filter(t => !w.includes(t))).slice(0, 3)]);
+  }
+  return q;
+}
+function buildLesson(id){
+  const n = node(id), P = phrasesOf(n);
+  const plan = n.words ? ["listen","ar2id","id2ar","listen","ar2id","id2ar","listen","id2ar","ar2id","listen"]
+                       : ["listen","ar2id","arrange","id2ar","fill","listen","arrange","id2ar","ar2id","arrange"];
+  let pool = shuffle(P.slice());
+  return plan.map(t => {
+    if(!pool.length) pool = shuffle(P.slice());
+    let p = pool.pop(), type = t;
+    if(t === "arrange" || t === "fill"){
+      const ok = x => !x.dots && toks(x.ar).length >= (t === "fill" ? 3 : 2) && toks(x.ar).length <= 7;
+      if(!ok(p)){ const j = pool.findIndex(ok); if(j >= 0){ pool.unshift(p); p = pool.splice(pool.findIndex(ok), 1)[0]; } else type = "ar2id"; }
+    }
+    return makeQ(type, p, P);
+  });
+}
+
+let L = null, QUEUE = [];
+function startLesson(id){
+  closeSheet();
+  L = {id, qs:buildLesson(id), i:0, ok:0, wrong:0, combo:0, maxCombo:0, t0:Date.now(), sel:null, built:[], req:0, res:false};
+  renderLesson();
+}
+const latOf = p => S.set.lat ? `<small>${esc(p.lat)}</small>` : "";
+function qBody(q){
+  const P = q.p;
+  if(q.type === "listen") return `<h2>Dengarkan, lalu pilih artinya</h2>
+    <div class="lis"><button class="spk big" data-act="say" data-t="${esc(P.ar)}" aria-label="Putar suara">${IC.vol}</button><button class="spk slow" data-act="slow" data-t="${esc(P.ar)}" style="width:64px;height:64px">PELAN</button></div>
+    <div class="opts">${q.opts.map((o, i) => `<button class="opt" data-act="sel" data-i="${i}"><span class="k">${i + 1}</span>${esc(o.id)}</button>`).join("")}</div>`;
+  if(q.type === "ar2id") return `<h2>Apa artinya?</h2>
+    <div class="say">${mascot("idle", "sm")}<button class="bub" data-act="say" data-t="${esc(P.ar)}"><span class="ar" lang="ar">${esc(P.ar)}</span>${latOf(P)}</button></div>
+    <div class="opts">${q.opts.map((o, i) => `<button class="opt" data-act="sel" data-i="${i}"><span class="k">${i + 1}</span>${esc(o.id)}</button>`).join("")}</div>`;
+  if(q.type === "id2ar") return `<h2>Pilih bahasa Arabnya</h2>
+    <div class="say">${mascot("idle", "sm")}<div class="bub">${esc(P.id)}</div></div>
+    <div class="opts">${q.opts.map((o, i) => `<button class="opt aro" data-act="sel" data-i="${i}"><span class="ar" lang="ar">${esc(o.ar)}</span>${latOf(o)}</button>`).join("")}</div>`;
+  if(q.type === "arrange") return `<h2>Susun kalimat ini</h2>
+    <div class="say">${mascot("idle", "sm")}<div class="bub">${esc(P.id)}</div></div>
+    <div class="ansz" dir="rtl" id="ansz"></div><div class="bank" dir="rtl" id="bank"></div>`;
+  return `<h2>Lengkapi kalimatnya</h2>
+    <div class="fillq ar" lang="ar">${q.words.map((w, i) => i === q.k ? `<span class="blank" id="blank">${L.sel != null ? esc(q.opts[L.sel]) : "&nbsp;"}</span>` : esc(w)).join(" ")}</div>
+    <p class="muted" style="text-align:center;margin:0 0 16px">${esc(P.id)}</p>
+    <div class="opts g2">${q.opts.map((o, i) => `<button class="opt aro" data-act="sel" data-i="${i}"><span class="ar" lang="ar">${esc(o)}</span></button>`).join("")}</div>`;
+}
+function renderLesson(){
+  const q = L.qs[L.i], pct = Math.min(100, L.ok / 10 * 100);
+  const w = $("#lesson");
+  w.innerHTML = `<div class="ls-in"><div class="ls-top"><button class="x" data-act="quit" aria-label="Keluar">${IC.x}</button><div class="pbar"><i style="width:${pct}%"></i></div>${L.combo >= 3 ? `<span class="combo">${L.combo}× beruntun</span>` : ""}</div>
+    <div class="ls-body" id="qb">${qBody(q)}</div><div class="ls-foot" id="foot"><button class="b pri" data-act="check" id="chk" disabled>Periksa</button></div></div>`;
+  w.hidden = false;
+  if(q.type === "arrange") renderArrange();
+  if(q.type === "listen") setTimeout(() => speak(q.p.ar), 350);
+}
+function renderArrange(){
+  const q = L.qs[L.i];
+  $("#ansz").innerHTML = L.built.map(j => `<button class="tile" data-act="unt" data-j="${j}">${esc(q.bank[j])}</button>`).join("");
+  $("#bank").innerHTML = q.bank.map((t, j) => `<button class="tile ${L.built.includes(j) ? "used" : ""}" data-act="til" data-j="${j}">${esc(t)}</button>`).join("");
+  $("#chk").disabled = !L.built.length;
+}
+function praise(){
+  const f = S.prof.gender === "f";
+  return pick([[f ? "أَحْسَنْتِ" : "أَحْسَنْتَ", f ? "Ahsanti! Bagus sekali" : "Ahsanta! Bagus sekali"], ["مُمْتَاز", "Mumtâz! Luar biasa"], ["مَا شَاءَ اللّٰهُ", "Mâsyâ Allâh!"], ["صَحِيح", "Shahîh! Benar"]]);
+}
+function check(){
+  if(L.res) return;
+  const q = L.qs[L.i];
+  let ok;
+  if(q.type === "arrange") ok = L.built.map(j => q.bank[j]).join(" ") === q.ans.join(" ");
+  else if(q.type === "fill") ok = q.opts[L.sel] === q.words[q.k];
+  else ok = q.opts[L.sel] === q.p;
+  L.res = true;
+  $("#qb").classList.add("lock-opts");
+  if(q.opts){
+    const right = q.type === "fill" ? q.opts.indexOf(q.words[q.k]) : q.opts.indexOf(q.p);
+    document.querySelectorAll(".opt").forEach((b, i) => { if(i === right) b.classList.add("ok"); else if(i === L.sel) b.classList.add("no"); b.classList.remove("sel"); });
+  }
+  if(ok){ L.ok++; L.combo++; L.maxCombo = Math.max(L.maxCombo, L.combo); sfxOk(); if(q.type !== "listen") speak(q.p.ar); }
+  else{ L.wrong++; L.combo = 0; sfxBad(); if(L.req < 6){ L.req++; L.qs.push(makeQ(q.type, q.p, phrasesOf(node(L.id)))); } }
+  const pr = praise();
+  $("#foot").innerHTML = ok
+    ? `<div class="res ok"><div class="res-h">${IC.check}<span>${L.combo === 5 || L.combo === 10 ? L.combo + " benar berturut-turut!" : `<span class="ar" lang="ar">${pr[0]}</span> ${esc(pr[1])}`}</span></div><button class="b pri" data-act="next" autofocus>Lanjut</button></div>`
+    : `<div class="res bad"><div class="res-h">${IC.x}<span>Jawaban yang benar:</span></div>
+       <div class="res-a"><button class="spk" data-act="say" data-t="${esc(q.p.ar)}" aria-label="Dengar">${IC.vol}</button><div><div class="ar" lang="ar">${esc(q.p.ar)}</div>${latOf(q.p)}<div>${esc(q.p.id)}</div></div></div>
+       <button class="b red" data-act="next">Mengerti</button></div>`;
+  const pb = document.querySelector(".pbar i"); if(pb) pb.style.width = Math.min(100, L.ok / 10 * 100) + "%";
+}
+function nextQ(){
+  L.i++; L.sel = null; L.built = []; L.res = false;
+  if(L.i >= L.qs.length) finishLesson(); else renderLesson();
+}
+function finishLesson(){
+  const secs = Math.round((Date.now() - L.t0) / 1000), acc = Math.round(100 * L.ok / Math.max(1, L.ok + L.wrong));
+  const bonus = Math.min(5, Math.floor(L.maxCombo / 2)), perfect = L.wrong === 0, xp = 10 + bonus + (perfect ? 5 : 0);
+  const tk = today(), before = S.days[tk] || 0;
+  S.xp += xp; S.days[tk] = before + xp; S.done[L.id] = (S.done[L.id] || 0) + 1; S.lessons++;
+  S.best = Math.max(S.best, L.maxCombo); if(perfect) S.perfect++;
+  const nb = BADGES.filter(b => !S.badges[b.id] && b.ok()); nb.forEach(b => { S.badges[b.id] = tk; });
+  save();
+  QUEUE = [{k:"done", xp, acc, secs, id:L.id}];
+  if(before === 0) QUEUE.push({k:"streak", n:streak()});
+  if(before < S.prof.goal && before + xp >= S.prof.goal) QUEUE.push({k:"goal"});
+  nb.forEach(b => QUEUE.push({k:"badge", b}));
+  L = null;
+  celebrate();
+}
+function celebrate(){
+  const it = QUEUE.shift(), w = $("#lesson");
+  if(!it){ w.hidden = true; w.innerHTML = ""; TAB = "path"; render(); return; }
+  w.dataset.item = JSON.stringify(it.k === "badge" ? {k:"badge", id:it.b.id} : it);
+  let body;
+  if(it.k === "done"){
+    sfxWin();
+    body = `${mascot("happy", "big bounce")}<h1>Pelajaran selesai!</h1><p>${esc(node(it.id).t)}</p>
+      <div class="tiles"><div class="st g"><small>TOTAL XP</small><b>+${it.xp}</b></div><div class="st n"><small>AKURASI</small><b>${it.acc}%</b></div><div class="st u"><small>WAKTU</small><b>${Math.floor(it.secs / 60)}:${pad(it.secs % 60)}</b></div></div>`;
+  }else if(it.k === "streak"){
+    const wk = weekDays(), names = ["Sen","Sel","Rab","Kam","Jum","Sab","Min"], tk = today();
+    body = `<div class="flame" style="color:var(--orange)">${IC.fire}</div><div class="bignum">${it.n}</div><h1 style="color:var(--orange);margin:0">hari berturut-turut</h1>
+      <div class="week">${wk.map((k, i) => `<div class="${k === tk ? "today" : ""}">${names[i]}<i class="${S.days[k] ? "on" : ""}">${S.days[k] ? IC.check : ""}</i></div>`).join("")}</div>
+      <p style="margin-top:14px">Belajar tiap hari supaya apinya tetap menyala.</p>`;
+  }else if(it.k === "goal"){
+    body = `${mascot("happy", "big bounce")}<h1 style="color:var(--green)">Target harian tercapai!</h1><p>${S.prof.goal} XP hari ini. Bârakallâhu fîk.</p>`;
+  }else{
+    body = `<div style="width:170px">${badgeSVG(it.b)}</div><p style="font-weight:900;letter-spacing:.1em">LENCANA BARU</p><h1 style="color:var(--brown)">${esc(it.b.n)}</h1><p>${esc(it.b.d)}</p>`;
+  }
+  const canShare = it.k !== "goal";
+  w.innerHTML = `<div class="ls-in"><div class="cel">${body}</div><div class="ls-foot stack">${canShare ? `<button class="b" data-act="shareCel">${IC.share} Bagikan ke WhatsApp</button>` : ""}<button class="b blue" data-act="cel">Lanjut</button></div></div>`;
+  w.hidden = false;
+}
+
+/* ---------- Bacaan ---------- */
+function viewRead(){
+  let h = topbar() + `<div class="scr"><div class="h1">Bacaan</div>
+    <div class="seg" role="group"><button data-act="rd" data-v="doa" aria-pressed="${RD === "doa"}">Doa safar & umrah</button><button data-act="rd" data-v="dzikir" aria-pressed="${RD === "dzikir"}">Dzikir pagi & petang</button></div>`;
+  if(RD === "doa"){
+    h += `<div class="note"><b>Tidak ada doa khusus per putaran.</b> Selain bacaan di bawah, boleh berdoa apa saja saat thawaf dan sa'i, termasuk dalam bahasa Indonesia.</div>`;
+    let st = "";
+    DOA.forEach(d => {
+      if(d.st !== st){ st = d.st; h += `<div class="h1" style="font-size:16px;color:var(--green);margin-top:22px">${esc(st)}</div>`; }
+      h += card(d);
+    });
+  }else{
+    h += `<div class="seg" style="margin-top:10px"><button data-act="wk" data-v="pagi" aria-pressed="${WAKTU === "pagi"}">Pagi</button><button data-act="wk" data-v="petang" aria-pressed="${WAKTU === "petang"}">Petang</button></div>
+      <div class="note"><b>Urutan dan jumlah</b> mengikuti kitab Hisnul Muslim. Ketuk penghitung setiap selesai membaca.</div>`;
+    DZIKIR.forEach((d0, i) => {
+      if(d0.only && d0.only !== WAKTU) return;
+      const d = WAKTU === "petang" && d0.pt ? Object.assign({}, d0, d0.pt) : d0, c = CNT[WAKTU + i] || 0;
+      h += card(d, `<button class="ctr ${c >= d.n ? "done" : ""}" data-act="cnt" data-i="${i}">${c >= d.n ? "Selesai " : "Hitung "}${c}/${d.n}</button>`, d.n, c >= d.n);
+    });
+  }
+  h += `<div class="note">Audio memakai suara bawaan HP, belum mengikuti tajwid. Untuk ayat Al-Qur'an, cocokkan dengan bacaan ustadz.</div>`;
+  return h + `</div>`;
+}
+function card(d, extra, n, done){
+  return `<div class="card ${done ? "done" : ""}"><h4>${esc(d.t)}${n ? `<span class="cnt">${n}×</span>` : ""}</h4>${d.w ? `<p class="w">${esc(d.w)}</p>` : ""}
+    <div class="ar" lang="ar">${esc(d.ar)}</div>${S.set.lat ? `<div class="lt">${esc(d.lat)}</div>` : ""}<div class="tr">${esc(d.id)}</div><div class="src">Sumber: ${esc(d.src)}</div>
+    <div class="acts"><button class="spk" data-act="say" data-t="${esc(d.ar)}" aria-label="Dengar">${IC.vol}</button><button class="spk slow" data-act="slow" data-t="${esc(d.ar)}">PELAN</button>${extra || ""}</div></div>`;
+}
+
+/* ---------- Peringkat ---------- */
+function viewRank(){
+  const g = S.prof.group || "";
+  return topbar() + `<div class="scr"><div class="h1">Peringkat rombongan</div>
+    <div class="hello">${mascot("idle", "sm")}<div class="bub">Minggu ini Anda mengumpulkan <b style="color:var(--gold-d)">${weekXP()} XP</b>. Peringkat direset setiap Senin.</div></div>
+    <div class="card"><h4>Kode rombongan</h4><p class="w">Isi kode dari pembimbing, misalnya MTP-DES26. Jamaah dengan kode yang sama akan saling bersaing di papan peringkat.</p>
+      <input class="inp" id="grp" data-in="group" value="${esc(g)}" placeholder="Contoh: MTP-DES26" autocomplete="off" maxlength="20"></div>
+    <table class="lb"><tr class="me"><td class="rk">1</td><td>${esc(S.prof.name)} (Anda)</td><td class="xp">${weekXP()} XP</td></tr></table>
+    <div class="note"><b>Segera hadir:</b> papan peringkat bersama jamaah lain se-rombongan. Saat ini baru nilai Anda sendiri yang tampil.</div></div>`;
+}
+
+/* ---------- Profil ---------- */
+function viewMe(){
+  const nb = Object.keys(S.badges).length, ini = (S.prof.name || "?").trim().charAt(0).toUpperCase();
+  const seg = (k, items, cur) => `<div class="seg">${items.map(([v, l]) => `<button data-act="setv" data-k="${k}" data-v="${v}" aria-pressed="${String(cur) === String(v)}">${l}</button>`).join("")}</div>`;
+  return topbar() + `<div class="scr">
+    <div class="prof"><div class="av"><svg viewBox="0 0 100 110"><polygon points="${HEXS}" fill="var(--green-d)"/><polygon points="${HEXP}" fill="var(--green)"/></svg><span>${esc(ini)}</span></div>
+      <div><div style="font-size:22px;font-weight:900">${esc(S.prof.name)}</div><div class="muted">Mulai belajar ${esc(S.since)}${S.prof.group ? " · " + esc(S.prof.group) : ""}</div></div></div>
+    <div class="stats">
+      <div class="stat" style="color:var(--orange)">${IC.fire}<div><b style="color:var(--ink)">${streak()}</b><small>Runtunan hari</small></div></div>
+      <div class="stat" style="color:var(--gold)">${IC.bolt}<div><b style="color:var(--ink)">${S.xp}</b><small>Total XP</small></div></div>
+      <div class="stat" style="color:var(--green)">${IC.check}<div><b style="color:var(--ink)">${S.lessons}</b><small>Pelajaran</small></div></div>
+      <div class="stat" style="color:var(--blue)">${IC.star}<div><b style="color:var(--ink)">${nb}/${BADGES.length}</b><small>Lencana</small></div></div></div>
+    <div class="stack" style="margin-top:14px"><button class="b" data-act="shareMe">${IC.share} Bagikan ke WhatsApp</button></div>
+    <div class="h1" style="font-size:20px">Lencana</div>
+    <div class="badges">${BADGES.map(b => `<button class="bdg ${S.badges[b.id] ? "" : "lk"}" data-act="bdg" data-id="${b.id}">${badgeSVG(b, !S.badges[b.id])}${esc(b.n)}</button>`).join("")}</div>
+    <div class="h1" style="font-size:20px">Pengaturan</div>
+    <div class="set">
+      <label class="row" style="flex-direction:column;align-items:stretch;gap:6px">Nama panggilan<input class="inp" data-in="name" value="${esc(S.prof.name)}" maxlength="24"></label>
+      <div class="row"><span>Saya</span>${seg("gender", [["m","Laki-laki"],["f","Perempuan"]], S.prof.gender)}</div>
+      <div class="row"><span>Target harian</span>${seg("goal", GOALS.map(g => [g.v, g.n]), S.prof.goal)}</div>
+      <div class="row"><span>Kecepatan suara</span>${seg("rate", [[0.65,"Pelan"],[0.8,"Sedang"],[0.95,"Normal"]], S.set.rate)}</div>
+      <label class="row"><span>Tulisan Latin</span><input type="checkbox" class="tog" data-tog="lat" ${S.set.lat ? "checked" : ""}></label>
+      <label class="row"><span>Efek suara</span><input type="checkbox" class="tog" data-tog="sfx" ${S.set.sfx ? "checked" : ""}></label>
+      <p class="muted" style="margin:0;font-size:13.5px">${arVoice ? "Suara Arab: " + esc(arVoice.name) : "Belum ada suara Arab di HP ini. iPhone: Pengaturan › Aksesibilitas › Konten Lisan › Suara › Arab. Android: Setelan › Teks ke ucapan › pasang data suara Arab."}</p>
+      <button class="b ghost" data-act="reset" style="color:var(--red)">Hapus semua kemajuan</button>
+    </div>
+    ${BRAND ? `<div class="credit"><img src="${BRAND.logo}" alt=""><span>Persembahan ${esc(BRAND.name)}</span></div>` : ""}</div>`;
+}
+
+/* ---------- Onboarding ---------- */
+function viewOnboard(){
+  const bar = `<div class="pbar" style="margin-bottom:10px"><i style="width:${OB * 33.3}%"></i></div>`;
+  const brand = BRAND ? `<div class="brandline"><img src="${BRAND.logo}" alt=""><span>${esc(BRAND.name)}</span></div>` : "";
+  if(OB === 0) return `<div class="ob"><div class="ob-body" style="align-items:center;text-align:center">${mascot("happy", "big bounce")}
+      <div class="ns-ar" lang="ar" style="font-size:40px">حِوَار</div><h2 style="color:var(--green)">Hiwar Umrah</h2>
+      <p class="muted" style="margin:0">Belajar bahasa Arab untuk umrah, 5 menit sehari.</p></div>
+      <div class="stack"><button class="b pri" data-act="ob">Mulai</button></div>${brand}</div>`;
+  if(OB === 1) return `<div class="ob">${bar}<div class="ob-body top"><div class="say">${mascot("idle", "sm")}<div class="bub">Ahlan wa sahlan! Saya Jamal, unta kecil yang akan menemani Anda. Siapa nama panggilan Anda?</div></div>
+      <input class="inp" id="obName" data-in="obname" value="${esc(OBD.name)}" placeholder="Nama panggilan" maxlength="24" autocomplete="given-name">
+      <p class="muted" style="margin:6px 0 0">Saya seorang:</p>
+      <div class="seg"><button data-act="obg" data-v="m" aria-pressed="${OBD.gender === "m"}">Laki-laki</button><button data-act="obg" data-v="f" aria-pressed="${OBD.gender === "f"}">Perempuan</button></div>
+      <p class="muted" style="margin:0;font-size:13.5px">Dalam bahasa Arab, sapaan untuk laki-laki dan perempuan berbeda.</p></div>
+      <div class="stack"><button class="b pri" data-act="ob" id="obNext" ${OBD.name.trim() ? "" : "disabled"}>Lanjut</button></div></div>`;
+  if(OB === 2) return `<div class="ob">${bar}<div class="ob-body top"><div class="say">${mascot("idle", "sm")}<div class="bub">Berapa lama mau belajar setiap hari?</div></div>
+      ${GOALS.map(g => `<button class="goal" data-act="obgoal" data-v="${g.v}" aria-pressed="${OBD.goal === g.v}">${g.n}<span>${g.d}</span></button>`).join("")}
+      <p class="muted" style="margin:0;font-size:13.5px">Target bisa diubah kapan saja di Profil.</p></div>
+      <div class="stack"><button class="b pri" data-act="ob">Lanjut</button></div></div>`;
+  return `<div class="ob">${bar}<div class="ob-body" style="align-items:center;text-align:center">${mascot("happy", "big bounce")}
+      <h2>Bismillah, ${esc(OBD.name.trim())}!</h2><p class="muted" style="margin:0">Kita mulai dari kata-kata dasar, lalu berlatih percakapan dari pesawat sampai ziarah.</p></div>
+      <div class="stack"><button class="b pri" data-act="obdone">Ayo mulai</button></div>${brand}</div>`;
+}
+
+/* ---------- Poster WhatsApp ---------- */
+const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+const svgURI = s => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
+function rr(x, X, Y, W, H, R){ x.beginPath(); x.moveTo(X + R, Y); x.arcTo(X + W, Y, X + W, Y + H, R); x.arcTo(X + W, Y + H, X, Y + H, R); x.arcTo(X, Y + H, X, Y, R); x.arcTo(X, Y, X + W, Y, R); x.closePath(); }
+function wrap(x, text, cx, y, maxW, lh){
+  const words = String(text).split(" "); let line = "", lines = [];
+  for(const w of words){ const t = line ? line + " " + w : w; if(x.measureText(t).width > maxW && line){ lines.push(line); line = w; } else line = t; }
+  if(line) lines.push(line);
+  lines.forEach((l, i) => x.fillText(l, cx, y + i * lh));
+  return y + lines.length * lh;
+}
+async function makePoster(it){
+  const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  try{ await Promise.all(['900 80px Nunito', '800 40px Nunito', '700 60px "Noto Naskh Arabic"'].map(f => document.fonts.load(f))); }catch{}
+  const gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "#45C455"); gr.addColorStop(1, "#278533");
+  x.fillStyle = gr; x.fillRect(0, 0, W, H);
+  x.strokeStyle = "rgba(255,255,255,.09)"; x.lineWidth = 6;
+  for(let r = 0; r < 9; r++) for(let k = 0; k < 7; k++){
+    const cx = k * 180 + (r % 2 ? 90 : 0), cy = r * 156, R = 70;
+    x.beginPath(); for(let a = 0; a < 6; a++){ const t = Math.PI / 3 * a - Math.PI / 2; x.lineTo(cx + R * Math.cos(t), cy + R * Math.sin(t)); } x.closePath(); x.stroke();
+  }
+  x.textAlign = "center"; x.fillStyle = "#fff";
+  x.font = '700 76px "Noto Naskh Arabic", serif'; x.fillText("حِوَار", W / 2, 130);
+  x.font = '900 34px Nunito, sans-serif'; x.fillText("HIWAR UMRAH  ·  BELAJAR BAHASA ARAB UNTUK UMRAH", W / 2, 195);
+  x.save(); x.shadowColor = "rgba(0,0,0,.18)"; x.shadowBlur = 30; x.shadowOffsetY = 12; x.fillStyle = "#fff"; rr(x, 70, 240, 940, 820, 56); x.fill(); x.restore();
+  const name = S.prof.name;
+  const ink = "#3A2410", grey = "#6E726C", BR = "#5E3714", GR = "#2C9139";
+  const box = async (items, y) => {
+    const bw = 260, gap = 30, x0 = W / 2 - (items.length * bw + (items.length - 1) * gap) / 2;
+    items.forEach(([lab, val, col], i) => {
+      const bx = x0 + i * (bw + gap);
+      x.strokeStyle = col; x.lineWidth = 6; rr(x, bx, y, bw, 150, 30); x.stroke();
+      x.fillStyle = col; rr(x, bx, y, bw, 48, 30); x.fill(); x.fillRect(bx, y + 24, bw, 24);
+      x.fillStyle = "#fff"; x.font = '900 24px Nunito, sans-serif'; x.fillText(lab, bx + bw / 2, y + 33);
+      x.fillStyle = col; x.font = '900 54px Nunito, sans-serif'; x.fillText(val, bx + bw / 2, y + 120);
+    });
+  };
+  if(it.k === "badge"){
+    const b = BADGES.find(z => z.id === it.id);
+    x.drawImage(await loadImg(svgURI(badgeSVG(b))), W / 2 - 140, 280, 280, 308);
+    x.fillStyle = grey; x.font = '900 32px Nunito, sans-serif'; x.fillText("LENCANA BARU", W / 2, 650);
+    x.fillStyle = BR; x.font = '900 76px Nunito, sans-serif'; x.fillText(b.n, W / 2, 740);
+    x.fillStyle = grey; x.font = '700 38px Nunito, sans-serif'; wrap(x, b.d + " · diraih " + name, W / 2, 810, 800, 50);
+  }else{
+    x.drawImage(await loadImg(svgURI(mascot("happy"))), W / 2 - 135, 262, 270, 270);
+    if(it.k === "streak"){
+      x.fillStyle = "#FF9600"; x.font = '900 190px Nunito, sans-serif'; x.fillText(String(it.n), W / 2, 715);
+      x.fillStyle = BR; x.font = '900 56px Nunito, sans-serif'; x.fillText("hari berturut-turut", W / 2, 790);
+      x.fillStyle = grey; x.font = '700 38px Nunito, sans-serif'; wrap(x, name + " rutin belajar bahasa Arab untuk persiapan umrah", W / 2, 858, 800, 50);
+    }else if(it.k === "done"){
+      x.fillStyle = GR; x.font = '900 72px Nunito, sans-serif'; x.fillText("Pelajaran selesai!", W / 2, 615);
+      x.fillStyle = BR; x.font = '800 46px Nunito, sans-serif'; x.fillText(node(it.id).t + " · " + name, W / 2, 685);
+      await box([["XP", "+" + it.xp, "#E09A00"], ["AKURASI", it.acc + "%", "#2C9139"], ["WAKTU", Math.floor(it.secs / 60) + ":" + pad(it.secs % 60), "#1690CB"]], 740);
+    }else{
+      x.fillStyle = BR; x.font = '900 72px Nunito, sans-serif'; x.fillText(name, W / 2, 615);
+      x.fillStyle = grey; x.font = '700 40px Nunito, sans-serif'; x.fillText("sedang bersiap umrah dengan Hiwar Umrah", W / 2, 680);
+      await box([["RUNTUNAN", streak() + " hari", "#D97F00"], ["TOTAL XP", String(S.xp), "#E09A00"], ["LENCANA", String(Object.keys(S.badges).length), "#1690CB"]], 740);
+    }
+  }
+  x.fillStyle = GR; x.font = '700 54px "Noto Naskh Arabic", serif'; x.fillText("بَارَكَ اللّٰهُ فِيكُمْ", W / 2, 1000);
+  if(BRAND){
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(170, 1185, 82, 0, Math.PI * 2); x.fill();
+    try{ x.drawImage(await loadImg(BRAND.logo), 105, 1120, 130, 130); }catch{}
+    x.textAlign = "left"; x.fillStyle = "#fff"; x.font = '900 48px Nunito, sans-serif'; x.fillText(BRAND.name, 285, 1172);
+    x.fillStyle = "rgba(255,255,255,.9)"; x.font = '800 36px Nunito, sans-serif'; x.fillText(BRAND.site, 285, 1228);
+  }else{
+    x.fillStyle = "#fff"; x.font = '900 44px Nunito, sans-serif'; x.fillText("Yuk ikut belajar bahasa Arab untuk umrah!", W / 2, 1200);
+  }
+  return c;
+}
+function shareText(it){
+  const t = it.k === "streak" ? `Alhamdulillah, sudah ${it.n} hari berturut-turut saya belajar bahasa Arab untuk umrah di Hiwar Umrah.`
+    : it.k === "done" ? `Alhamdulillah, saya baru menyelesaikan pelajaran "${node(it.id).t}" di Hiwar Umrah (+${it.xp} XP).`
+    : it.k === "badge" ? `Alhamdulillah, saya mendapat lencana "${BADGES.find(b => b.id === it.id).n}" di Hiwar Umrah.`
+    : `Saya sedang belajar bahasa Arab untuk persiapan umrah di Hiwar Umrah: ${S.xp} XP, runtunan ${streak()} hari.`;
+  return t + (SITE_URL ? ` Yuk ikut belajar: ${SITE_URL}` : "");
+}
+async function sharePoster(it, btn){
+  const label = btn ? btn.lastChild.textContent : "";
+  if(btn){ btn.disabled = true; btn.lastChild.textContent = " Menyiapkan poster…"; }
+  try{
+    const c = await makePoster(it);
+    const blob = await new Promise(r => c.toBlob(r, "image/png"));
+    const file = new File([blob], "hiwar-umrah.png", {type:"image/png"}), text = shareText(it);
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], text}); return; }catch(e){ if(e && e.name === "AbortError") return; }
+    }
+    const url = URL.createObjectURL(blob);
+    openSheet(`<h3>Poster siap</h3><p class="muted" style="margin:0 0 6px">Di HP: tekan lama gambar, lalu pilih Simpan atau Bagikan.</p><img class="poster-img" src="${url}" alt="Poster pencapaian">
+      <div class="stack"><a class="b pri" href="${url}" download="hiwar-umrah.png" style="text-decoration:none">Unduh gambar</a>
+      <a class="b" href="https://wa.me/?text=${encodeURIComponent(text)}" target="_blank" rel="noopener" style="text-decoration:none">Kirim teks ke WhatsApp</a></div>`);
+  }catch{
+    openSheet(`<h3>Poster belum bisa dibuat</h3><p class="muted">Browser ini belum mendukung pembuatan gambar. Coba buka lewat Chrome atau Safari terbaru.</p>`);
+  }finally{
+    if(btn){ btn.disabled = false; btn.lastChild.textContent = label; }
+  }
+}
+
+/* ---------- Aksi ---------- */
+const ACT = {
+  tab: b => { TAB = b.dataset.t; render(); window.scrollTo(0, 0); },
+  node: b => openNode(b.dataset.id),
+  start: b => startLesson(b.dataset.id),
+  phr: b => openPhrases(b.dataset.id),
+  closeSheet,
+  say: b => speak(b.dataset.t),
+  slow: b => speak(b.dataset.t, 0.55),
+  sel: b => {
+    if(!L || L.res) return;
+    const q = L.qs[L.i]; L.sel = +b.dataset.i;
+    document.querySelectorAll(".opt").forEach(o => o.classList.toggle("sel", o === b));
+    if(q.type === "id2ar") speak(q.opts[L.sel].ar);
+    if(q.type === "fill"){ $("#blank").textContent = q.opts[L.sel]; speak(q.opts[L.sel]); }
+    $("#chk").disabled = false;
+  },
+  til: b => { if(L.res) return; const j = +b.dataset.j; if(!L.built.includes(j)){ L.built.push(j); speak(L.qs[L.i].bank[j]); renderArrange(); } },
+  unt: b => { if(L.res) return; L.built = L.built.filter(j => j !== +b.dataset.j); renderArrange(); },
+  check,
+  next: nextQ,
+  quit: () => {
+    if(!L) return;
+    L.footPrev = $("#foot").innerHTML;
+    $("#foot").innerHTML = `<p style="margin:0 0 10px;text-align:center">Keluar sekarang? Kemajuan pelajaran ini tidak tersimpan.</p><div class="stack"><button class="b red" data-act="quitYes">Keluar</button><button class="b" data-act="quitNo">Lanjut belajar</button></div>`;
+  },
+  quitYes: () => { L = null; const w = $("#lesson"); w.hidden = true; w.innerHTML = ""; if(window.speechSynthesis) speechSynthesis.cancel(); render(); },
+  quitNo: () => { $("#foot").innerHTML = L.footPrev; },
+  cel: celebrate,
+  shareCel: b => sharePoster(JSON.parse($("#lesson").dataset.item), b),
+  shareMe: b => sharePoster({k:"profile"}, b),
+  rd: b => { RD = b.dataset.v; render(); },
+  wk: b => { WAKTU = b.dataset.v; render(); },
+  cnt: b => {
+    const i = +b.dataset.i, d0 = DZIKIR[i], k = WAKTU + i;
+    CNT[k] = (CNT[k] || 0) >= d0.n ? 0 : (CNT[k] || 0) + 1;
+    const done = CNT[k] >= d0.n;
+    b.textContent = (done ? "Selesai " : "Hitung ") + CNT[k] + "/" + d0.n;
+    b.classList.toggle("done", done); b.closest(".card").classList.toggle("done", done);
+    if(done) sfxOk();
+  },
+  bdg: b => { const z = BADGES.find(x => x.id === b.dataset.id), got = S.badges[z.id];
+    openSheet(`<div class="ns"><div style="width:130px;margin:0 auto">${badgeSVG(z, !got)}</div><h3>${esc(z.n)}</h3><p class="muted">${esc(z.d)}</p><p>${got ? "Diraih " + esc(got) : "Belum diraih"}</p>
+      ${got ? `<div class="stack"><button class="b" data-act="shareBdg" data-id="${z.id}">${IC.share} Bagikan ke WhatsApp</button></div>` : ""}</div>`); },
+  shareBdg: b => sharePoster({k:"badge", id:b.dataset.id}, b),
+  setv: b => { const k = b.dataset.k, v = b.dataset.v;
+    if(k === "gender") S.prof.gender = v; else if(k === "goal") S.prof.goal = +v; else if(k === "rate"){ S.set.rate = +v; speak("مَرْحَبًا"); }
+    save(); render(); },
+  reset: b => {
+    if(b.dataset.sure){ S = fresh(); save(); OB = 0; TAB = "path"; render(); return; }
+    b.dataset.sure = "1"; b.textContent = "Ketuk lagi untuk menghapus semua kemajuan";
+  },
+  ob: () => { OB++; render(); const n = $("#obName"); if(n) n.focus(); },
+  obg: b => { OBD.gender = b.dataset.v; render(); },
+  obgoal: b => { OBD.goal = +b.dataset.v; render(); },
+  obdone: () => { S.prof = {name:OBD.name.trim().slice(0, 24), gender:OBD.gender, goal:OBD.goal, group:""}; S.since = today(); save(); render(); }
+};
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]");
+  if(b && ACT[b.dataset.act]) ACT[b.dataset.act](b, e);
+});
+document.addEventListener("input", e => {
+  const t = e.target, k = t.dataset && t.dataset.in;
+  if(k === "obname"){ OBD.name = t.value; const n = $("#obNext"); if(n) n.disabled = !t.value.trim(); }
+  else if(k === "name" && t.value.trim()){ S.prof.name = t.value.trim().slice(0, 24); save(); }
+  else if(k === "group"){ S.prof.group = t.value.trim().toUpperCase().slice(0, 20); save(); }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t.dataset && t.dataset.tog){ S.set[t.dataset.tog] = t.checked; save(); }
+});
+document.addEventListener("keydown", e => {
+  if(!L || $("#lesson").hidden) return;
+  if(e.key === "Enter"){ const b = $("#foot .b:not(:disabled)"); if(b){ e.preventDefault(); b.click(); } }
+  else if(/^[1-4]$/.test(e.key) && !L.res){ const o = document.querySelectorAll(".opt")[+e.key - 1]; if(o) o.click(); }
+});
+render();
+</script>
+</body>
+</html>
