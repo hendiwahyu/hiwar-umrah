@@ -1136,8 +1136,17 @@ async function makePoster(it){
     }
   }
   x.fillStyle = GR; x.font = '700 54px "Noto Naskh Arabic", serif'; x.fillText("بَارَكَ اللّٰهُ فِيكُمْ", W / 2, 1000);
-  x.textAlign = "center"; x.fillStyle = "#fff"; x.font = '900 40px Nunito, sans-serif';
-  x.fillText("Yuk ikut belajar bahasa Arab untuk umrah, gratis!", W / 2, 1118);
+  {
+    const t1 = "Yuk ikut belajar bahasa Arab untuk umrah,", t2 = "GRATIS!";
+    x.textAlign = "left"; x.font = '900 35px Nunito, sans-serif';
+    const w1 = x.measureText(t1 + " ").width; x.font = '900 42px Nunito, sans-serif';
+    const w2 = x.measureText(t2).width + 36, x0 = W / 2 - (w1 + w2) / 2;
+    x.font = '900 35px Nunito, sans-serif'; x.fillStyle = "#fff"; x.fillText(t1, x0, 1116);
+    x.save(); x.translate(x0 + w1 + w2 / 2, 1104); x.rotate(-0.05);
+    x.fillStyle = "#FFD43B"; rr(x, -w2 / 2, -36, w2, 68, 18); x.fill();
+    x.fillStyle = "#C2410C"; x.font = '900 42px Nunito, sans-serif'; x.textAlign = "center"; x.fillText(t2, 0, 15);
+    x.restore();
+  }
   if(BRAND){
     x.fillStyle = "#fff"; x.beginPath(); x.arc(150, 1245, 70, 0, Math.PI * 2); x.fill();
     try{ x.drawImage(await loadImg(BRAND.logo), 94, 1189, 112, 112); }catch{}
