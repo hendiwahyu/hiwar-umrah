@@ -251,6 +251,12 @@ button.bub{cursor:pointer}
 .ob{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
 .ob-body{flex:1;display:flex;flex-direction:column;gap:14px;justify-content:center}
 .ob-body.top{justify-content:flex-start;padding-top:10px}
+.ob>.pbar{flex:0 0 16px}
+.ob-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;background:var(--green-soft);border-radius:18px;padding:16px 14px}
+.ob-hero img{width:56px;height:56px;border-radius:14px;background:#fff;padding:4px}
+.ob-hero .ar{font-family:var(--f-ar);font-size:22px;line-height:1.7;color:var(--green-d)}
+.ob-hero p{margin:0;font-weight:700;font-size:15px;line-height:1.45}
+.ob-hero small{color:var(--muted);font-size:12.5px}
 .ob h2{font-size:24px;font-weight:900;margin:0}
 .goal{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:16px;border:2px solid var(--line);border-bottom-width:4px;background:var(--bg);font-weight:900;font-size:16px}
 .goal span{color:var(--muted);font-weight:700;font-size:14px}
@@ -1068,18 +1074,19 @@ function viewMe(){
 /* ---------- Onboarding ---------- */
 function viewOnboard(){
   const bar = `<div class="pbar" style="margin-bottom:10px"><i style="width:${OB * 33.3}%"></i></div>`;
+  const hero = (ar, id, src) => `<div class="ob-hero">${BRAND ? `<img src="${BRAND.logo}" alt="">` : ""}${ar ? `<div class="ar" lang="ar" dir="rtl">${ar}</div>` : ""}<p>${id}</p>${src ? `<small>${src}</small>` : ""}</div>`;
   const brand = BRAND ? `<div class="brandline"><img src="${BRAND.logo}" alt=""><span>${esc(BRAND.name)}</span></div>` : "";
   if(OB === 0) return `<div class="ob"><div class="ob-body" style="align-items:center;text-align:center">${mascot("happy", "big bounce")}
       <div class="ns-ar" lang="ar" style="font-size:40px">حِوَار</div><h2 style="color:var(--green)">Hiwar Umrah</h2>
       <p class="muted" style="margin:0">Belajar bahasa Arab untuk umrah, 5 menit sehari.</p></div>
       <div class="stack"><button class="b pri" data-act="ob">Mulai</button></div>${brand}</div>`;
-  if(OB === 1) return `<div class="ob">${bar}<div class="ob-body top"><div class="say">${mascot("idle", "sm")}<div class="bub">Ahlan wa sahlan! Saya Jamal, unta kecil yang akan menemani Anda. Siapa nama panggilan Anda?</div></div>
+  if(OB === 1) return `<div class="ob">${bar}<div class="ob-body top">${hero("", "Bekal terbaik ke Tanah Suci: bisa menyapa, bertanya, dan memahami doa dalam bahasa Arab.", "")}<div class="say">${mascot("idle", "sm")}<div class="bub">Ahlan wa sahlan! Saya Jamal, unta kecil yang akan menemani Anda. Siapa nama panggilan Anda?</div></div>
       <input class="inp" id="obName" data-in="obname" value="${esc(OBD.name)}" placeholder="Nama panggilan" maxlength="24" autocomplete="given-name">
       <p class="muted" style="margin:6px 0 0">Saya seorang:</p>
       <div class="seg"><button data-act="obg" data-v="m" aria-pressed="${OBD.gender === "m"}">Laki-laki</button><button data-act="obg" data-v="f" aria-pressed="${OBD.gender === "f"}">Perempuan</button></div>
       <p class="muted" style="margin:0;font-size:13.5px">Dalam bahasa Arab, sapaan untuk laki-laki dan perempuan berbeda.</p></div>
       <div class="stack"><button class="b pri" data-act="ob" id="obNext" ${OBD.name.trim() ? "" : "disabled"}>Lanjut</button></div></div>`;
-  if(OB === 2) return `<div class="ob">${bar}<div class="ob-body top"><div class="say">${mascot("idle", "sm")}<div class="bub">Berapa lama mau belajar setiap hari?</div></div>
+  if(OB === 2) return `<div class="ob">${bar}<div class="ob-body top">${hero("أَحَبُّ الْأَعْمَالِ إِلَى اللهِ أَدْوَمُهَا وَإِنْ قَلَّ", "“Amalan yang paling dicintai Allah adalah yang paling rutin, walaupun sedikit.”", "HR. Bukhari & Muslim")}<div class="say">${mascot("idle", "sm")}<div class="bub">Berapa lama mau belajar setiap hari?</div></div>
       ${GOALS.map(g => `<button class="goal" data-act="obgoal" data-v="${g.v}" aria-pressed="${OBD.goal === g.v}">${g.n}<span>${g.d}</span></button>`).join("")}
       <p class="muted" style="margin:0;font-size:13.5px">Target bisa diubah kapan saja di Profil.</p></div>
       <div class="stack"><button class="b pri" data-act="ob">Lanjut</button></div></div>`;
