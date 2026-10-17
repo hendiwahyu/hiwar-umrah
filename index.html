@@ -1136,13 +1136,23 @@ async function makePoster(it){
     }
   }
   x.fillStyle = GR; x.font = '700 54px "Noto Naskh Arabic", serif'; x.fillText("بَارَكَ اللّٰهُ فِيكُمْ", W / 2, 1000);
+  x.textAlign = "center"; x.fillStyle = "#fff"; x.font = '900 40px Nunito, sans-serif';
+  x.fillText("Yuk ikut belajar bahasa Arab untuk umrah, gratis!", W / 2, 1118);
   if(BRAND){
-    x.fillStyle = "#fff"; x.beginPath(); x.arc(170, 1185, 82, 0, Math.PI * 2); x.fill();
-    try{ x.drawImage(await loadImg(BRAND.logo), 105, 1120, 130, 130); }catch{}
-    x.textAlign = "left"; x.fillStyle = "#fff"; x.font = '900 48px Nunito, sans-serif'; x.fillText(BRAND.name, 285, 1172);
-    x.fillStyle = "rgba(255,255,255,.9)"; x.font = '800 36px Nunito, sans-serif'; x.fillText(BRAND.site, 285, 1228);
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(150, 1245, 70, 0, Math.PI * 2); x.fill();
+    try{ x.drawImage(await loadImg(BRAND.logo), 94, 1189, 112, 112); }catch{}
+    x.textAlign = "left"; x.fillStyle = "#fff"; x.font = '900 42px Nunito, sans-serif'; x.fillText(BRAND.name, 245, 1222);
+    x.font = '900 32px Nunito, sans-serif';
+    const uw = x.measureText(BRAND.site).width + 44;
+    x.fillStyle = "#FFD43B"; rr(x, 245, 1244, uw, 60, 30); x.fill();
+    x.fillStyle = "#3A2410"; x.fillText(BRAND.site, 267, 1285);
+  }else if(SITE_URL){
+    x.font = '900 34px Nunito, sans-serif'; const site = SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    const uw = x.measureText(site).width + 48;
+    x.fillStyle = "#FFD43B"; rr(x, W / 2 - uw / 2, 1170, uw, 64, 32); x.fill();
+    x.fillStyle = "#3A2410"; x.fillText(site, W / 2, 1214);
   }else{
-    x.fillStyle = "#fff"; x.font = '900 44px Nunito, sans-serif'; x.fillText("Yuk ikut belajar bahasa Arab untuk umrah!", W / 2, 1200);
+    x.fillStyle = "#fff"; x.font = '800 34px Nunito, sans-serif'; x.fillText("Cari \u201cHiwar Umrah\u201d", W / 2, 1200);
   }
   return c;
 }
