@@ -1137,11 +1137,16 @@ async function makePoster(it){
   }
   x.fillStyle = GR; x.font = '700 54px "Noto Naskh Arabic", serif'; x.fillText("بَارَكَ اللّٰهُ فِيكُمْ", W / 2, 1000);
   {
-    const t1 = "Yuk ikut belajar bahasa Arab untuk umrah,", t2 = "GRATIS!";
+    const t0 = "Yuk ikut ", t1 = "belajar bahasa Arab untuk umrah", t1b = ", ", t2 = "GRATIS!";
     x.textAlign = "left"; x.font = '900 35px Nunito, sans-serif';
-    const w1 = x.measureText(t1 + " ").width; x.font = '900 42px Nunito, sans-serif';
+    const a0 = x.measureText(t0).width, a1 = x.measureText(t1).width, a2 = x.measureText(t1b).width, w1 = a0 + a1 + a2;
+    x.font = '900 42px Nunito, sans-serif';
     const w2 = x.measureText(t2).width + 36, x0 = W / 2 - (w1 + w2) / 2;
-    x.font = '900 35px Nunito, sans-serif'; x.fillStyle = "#fff"; x.fillText(t1, x0, 1116);
+    x.font = '900 35px Nunito, sans-serif';
+    x.fillStyle = "rgba(255,212,59,.45)"; rr(x, x0 + a0 - 6, 1100, a1 + 12, 22, 8); x.fill();
+    x.fillStyle = "#fff"; x.fillText(t0, x0, 1116);
+    x.fillStyle = "#FFE680"; x.fillText(t1, x0 + a0, 1116);
+    x.fillStyle = "#fff"; x.fillText(t1b, x0 + a0 + a1, 1116);
     x.save(); x.translate(x0 + w1 + w2 / 2, 1104); x.rotate(-0.05);
     x.fillStyle = "#FFD43B"; rr(x, -w2 / 2, -36, w2, 68, 18); x.fill();
     x.fillStyle = "#C2410C"; x.font = '900 42px Nunito, sans-serif'; x.textAlign = "center"; x.fillText(t2, 0, 15);
