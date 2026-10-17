@@ -155,7 +155,12 @@ button.bub{cursor:pointer}
 .clue b{display:inline-flex;align-items:center;gap:4px;color:var(--gold-d)}
 .clue b svg{width:18px;height:18px}
 .clue .ar{font-size:22px;line-height:1.5}
-.clue .cbar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--gold);animation:shrink 6s linear forwards}
+.clue .cbar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--gold);animation:shrink 8s linear forwards}
+.clue-in{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:4px}
+.clue .pic{font-size:44px;line-height:1.1}
+.clue .spk{width:40px;height:40px}
+.gone-note{flex-basis:100%;color:var(--muted);font-size:13px}
+.opt.gone{opacity:.35;text-decoration:line-through;pointer-events:none}
 @keyframes shrink{from{width:100%}to{width:0}}
 .tile.glow{border-color:var(--gold);background:var(--gold-soft)}
 .combo{font-weight:900;color:var(--orange);font-size:15px;white-space:nowrap}
@@ -944,16 +949,49 @@ function renderArrange(){
   $("#chk").disabled = !L.built.length;
 }
 const startWords = (t, n) => { const w = String(t).split(/\s+/); return w.length > n ? w.slice(0, n).join(" ") + " …" : (w.length > 1 ? w.slice(0, w.length - 1).join(" ") + " …" : t.slice(0, Math.ceil(t.length / 2)) + "…"); };
-function clueText(q){
-  const P = q.p;
-  if(q.type === "listen") return `Bunyinya: <i>${esc(P.lat)}</i>`;
-  if(q.type === "ar2id") return `Artinya diawali: “${esc(startWords(P.id, 2))}”`;
-  if(q.type === "id2ar") return `Bunyinya diawali: “${esc(startWords(P.lat, 1))}”`;
-  if(q.type === "fill") return `Kalimat lengkapnya berbunyi: <i>${esc(P.lat)}</i>`;
+/* Gambar petunjuk: kata kunci arti → emoji */
+const PIC = [
+  ["zamzam","🕋💧"],["air|minum|diminum","💧"],["koper|tas","🧳"],["paspor","🛂"],["hotel","🏨"],["kamar","🛏️"],["kunci","🔑"],["wifi","📶"],["ac","❄️"],
+  ["sarapan","🍳"],["bersih","🧹"],["taksi","🚕"],["bus","🚌"],["pesawat|terbang","✈️"],["kursi","💺"],["selimut","🛌"],["jeddah|sampai|tiba","🛬"],
+  ["makan","🍽️"],["menu","📋"],["nasi","🍚"],["ayam","🍗"],["teh|susu","🍵"],["pedas","🌶️"],["gula","🍬"],["enak","😋"],["tagihan|bayar","🧾"],
+  ["kurma","🌴"],["mencicip|cicip","👅"],["harga|mahal|murah|riyal|diskon|ongkos","💰"],["berapa","🔢"],["kantong","🛍️"],["beli|belanja","🛒"],["kartu","💳"],
+  ["masjid|quba","🕌"],["ka'bah|thawaf|haram","🕋"],["putaran","🔄"],["hajar aswad","⚫"],["shafa|marwah|bukit|gunung|uhud","⛰️"],["sa'i|jalan kaki","🚶"],
+  ["toilet","🚻"],["wudhu|mandi","🚿"],["kanan","➡️"],["kiri","⬅️"],["dekat|jauh|di mana|alamat|tempat","📍"],["pintu","🚪"],
+  ["sakit kepala","🤕"],["demam","🤒"],["batuk","😷"],["perut","🤢"],["kaki","🦶"],["pilek","🤧"],["obat|resep","💊"],
+  ["rambut|cukur|pendek","✂️"],["sajadah|shalat|rakaat","🧎"],["parfum","🌸"],["tasbih","📿"],["warna","🎨"],["ukuran|besar","📏"],["bungkus|hadiah|oleh","🎁"],
+  ["telepon|hp","📱"],["nama","🪪"],["indonesia","🇮🇩"],["jakarta|kota","🏙️"],["rombongan|kumpul|berkumpul","👥"],["tersesat|terpisah","🧭"],
+  ["bicara|bahasa","🗣️"],["doa|doakan","🤲"],["ihram|niat|umrah|miqat","🕋"],["sandal","🩴"],["makam|kubur|syuhada","🪦"],["pemanah","🏹"],["perang","⚔️"],
+  ["kapan|jam|menit|minggu","⏰"],["terima kasih","🙏"],["selamat datang|halo|assalamualaikum|waalaikumsalam","👋"],["berkenalan","🤝"],
+  ["selesai|alhamdulillah","✅"],["berhenti","🛑"],["pelan","🐢"],["kilo","⚖️"],["lupa","🤔"],["pakaian","👕"],["hamzah","🛡️"],["naik","⬆️"],["lancar","🗣️"],
+  ["mau|minta|saya ingin","🙋"],["tidak","🚫"]
+].map(([k, e]) => [new RegExp(k.split("|").map(w => w.length <= 3 ? "(^|[^a-z'])" + w + "([^a-z]|$)" : w.length <= 5 ? "(^|[^a-z'])" + w : w).join("|")), e]);
+const KEYCAP = ["0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"];
+function picOf(id){
+  const t = " " + String(id).toLowerCase() + " ";
+  const num = t.match(/^\s*(\d+)\s*\(/); if(num && KEYCAP[+num[1]]) return KEYCAP[+num[1]];
+  if(/\b(senin|selasa|rabu|kamis|jumat|sabtu|minggu)\b/.test(t) && t.trim().split(/\s+/).length === 1) return "📅";
+  const out = []; for(const [re, e] of PIC){ if(re.test(t) && !out.some(o => o.includes(e) || e.includes(o))) out.push(e); if(out.length >= 3) break; }
+  return out.join(" ");
+}
+function eliminate(q){
+  if(!q.opts) return 0;
+  const right = q.type === "fill" ? q.opts.indexOf(q.words[q.k]) : q.opts.indexOf(q.p);
+  const btns = [...document.querySelectorAll(".opt")];
+  const wrong = shuffle(btns.map((b, i) => i).filter(i => i !== right && !btns[i].classList.contains("gone")));
+  wrong.slice(0, 2).forEach(i => { btns[i].classList.add("gone"); btns[i].disabled = true; if(L.sel === i){ L.sel = null; btns[i].classList.remove("sel"); $("#chk").disabled = true; } });
+  return Math.min(2, wrong.length);
+}
+function clueHTML(q){
+  const P = q.p, pic = picOf(P.id);
+  const picBox = pic ? `<div class="pic" aria-hidden="true">${pic}</div>` : "";
+  if(q.type === "listen" || q.type === "ar2id") return picBox + `Artinya berhubungan dengan gambar ini. ${q.type === "listen" ? `Bunyinya: <i>${esc(P.lat)}</i>` : `Diawali: “${esc(startWords(P.id, 2))}”`}`;
+  if(q.type === "id2ar"){ setTimeout(() => speak(P.ar), 200); return `<button class="spk" data-act="say" data-t="${esc(P.ar)}" aria-label="Dengar lagi">${IC.vol}</button> Dengarkan bunyi jawabannya, lalu cocokkan. Diawali: “${esc(startWords(P.lat, 1))}”`; }
+  if(q.type === "fill"){ setTimeout(() => speak(P.ar), 200); return `<button class="spk" data-act="say" data-t="${esc(P.ar)}" aria-label="Dengar lagi">${IC.vol}</button> Dengarkan kalimat lengkapnya: <i>${esc(P.lat)}</i>`; }
   const okSoFar = L.built.every((j, k) => q.bank[j] === q.ans[k]);
   if(!okSoFar) return "Ada kata yang tertukar. Ketuk kata di kotak atas untuk mengembalikannya.";
   const next = q.ans[L.built.length];
-  return next ? `Kata berikutnya: <span class="ar" lang="ar">${esc(next)}</span>` : "Susunan sudah lengkap. Ketuk Periksa.";
+  setTimeout(() => speak(P.ar), 200);
+  return next ? `Dengarkan kalimatnya. Kata berikutnya: <span class="ar" lang="ar">${esc(next)}</span>` : "Susunan sudah lengkap. Ketuk Periksa.";
 }
 function showHint(){
   if(!L || L.res || L.hints <= 0) return;
@@ -962,8 +1000,10 @@ function showHint(){
   const old = $("#clue"); if(old) old.remove();
   const box = document.createElement("div");
   box.className = "clue"; box.id = "clue";
-  box.innerHTML = `<b>${IC.bulb} Petunjuk</b> ${clueText(q)}<i class="cbar"></i>`;
+  box.innerHTML = `<b>${IC.bulb} Petunjuk</b><div class="clue-in">${clueHTML(q)}</div><i class="cbar"></i>`;
   $("#qb").prepend(box);
+  const gone = eliminate(q);
+  if(gone) box.querySelector(".clue-in").insertAdjacentHTML("beforeend", `<small class="gone-note">${gone} pilihan yang salah sudah disingkirkan.</small>`);
   if(q.type === "arrange"){
     const next = q.ans[L.built.length];
     const t = [...document.querySelectorAll("#bank .tile")].find((b, j) => q.bank[j] === next && !L.built.includes(j));
@@ -971,7 +1011,7 @@ function showHint(){
   }
   const hb = $("#hintBtn"); hb.lastChild.textContent = L.hints; hb.disabled = !L.hints;
   clearTimeout(L.clueT);
-  L.clueT = setTimeout(() => { box.remove(); document.querySelectorAll(".tile.glow").forEach(x => x.classList.remove("glow")); }, 6000);
+  L.clueT = setTimeout(() => { box.remove(); document.querySelectorAll(".tile.glow").forEach(x => x.classList.remove("glow")); }, 8000);
 }
 function praise(){
   const f = S.prof.gender === "f";
